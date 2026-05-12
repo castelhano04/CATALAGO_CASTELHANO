@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Castelhano Sport's</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0f0f0f;color:#fff}
+.header{background:#111;padding:18px;border-bottom:2px solid #ea580c;position:sticky;top:0;z-index:99}
+.logo{font-size:28px;font-weight:bold;color:#ea580c;text-align:center}
+.sub{text-align:center;color:#aaa;font-size:13px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;padding:12px}
+.card{background:#111;border:1px solid #222;border-radius:16px;overflow:hidden}
+.card img{width:100%;height:250px;object-fit:cover}
+.info{padding:14px}
+.nome{font-size:19px;font-weight:bold;margin-bottom:8px}
+.preco{color:#22c55e;font-size:22px;font-weight:bold;margin-bottom:10px}
+.desc{color:#bbb;font-size:14px;margin-bottom:12px}
+select,button{width:100%;padding:12px;border:none;border-radius:10px}
+select{background:#1f1f1f;color:#fff;margin-bottom:10px}
+button{background:#ea580c;color:#fff;font-weight:bold;cursor:pointer}
+.carrinho{position:fixed;bottom:0;width:100%;background:#111;border-top:2px solid #ea580c;padding:15px}
+.finalizar{background:#22c55e}
+#itensCarrinho{font-size:14px;color:#ddd;margin-bottom:10px;max-height:100px;overflow:auto}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="logo">Castelhano Sport's</div>
+<div class="sub">Represente seu time com estilo!</div>
+</div>
+
+<div class="grid" id="produtos"></div>
+
+<div class="carrinho">
+<div id="itensCarrinho">Carrinho vazio</div>
+<button class="finalizar" onclick="finalizarPedido()">FINALIZAR PEDIDO</button>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const firebaseConfig = {
+apiKey:'AIzaSyD4TfY6Iwrju_aaG1vpN-q1Z9LyiDBeQvQ',
+authDomain:'estoque-app-13f1d.firebaseapp.com',
+projectId:'estoque-app-13f1d',
+storageBucket:'estoque-app-13f1d.firebasestorage.app',
+messagingSenderId:'193095930583',
+appId:'1:193095930583:web:88587ee9f4e10076619692'
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let produtos=[];
+let carrinho=[];
+
+async function carregar(){
+ const snap = await getDocs(collection(db,'produtos'));
+ produtos=[];
+ snap.forEach(doc=>produtos.push({id:doc.id,...doc.data()}));
+ render();
+}
+
+function render(){
+ const lista=document.getElementById('produtos');
+ lista.innerHTML='';
+
+ produtos.forEach(produto=>{
+
+  let opcoes='';
+  let disponivel=false;
+  let estoqueTexto='';
+
+  for(let t in produto.tamanhos){
+
+   let d=produto.tamanhos[t];
+   let restante=d.total-d.vendido;
+
+   estoqueTexto += `
+   <div style="
+   background:#1f1f1f;
+   padding:8px;
+   border-radius:8px;
+   margin-bottom:6px">
+   ${t}: ${restante} disponível
+   </div>`;
+
+   if(restante>0){
+    disponivel=true;
+
+    opcoes += `
+    <option value="${t}">
+    ${t} (${restante} disponíveis)
+    </option>`;
+   }
+  }
+
+  lista.innerHTML += `
+  <div class="card">
+
+   <img src="${produto.imagens?.[0] || produto.img}">
+
+   <div class="info">
+
+    <div class="nome">
+    ${produto.nome}
+    </div>
+
+    <div class="preco">
+    R$ ${produto.valor}
+    </div>
+
+    ${estoqueTexto}
+
+    ${
+      disponivel
+      ?
+      `
+      <select id="tam-${produto.id}">
+      ${opcoes}
+      </select>
+
+      <button onclick="addCarrinho('${produto.id}')">
+      ADICIONAR AO CARRINHO
+      </button>
+      `
+      :
+      `
+      <button style="
+      background:#ef4444;
+      cursor:not-allowed">
+      ESGOTADO
+      </button>
+      `
+    }
+
+   </div>
+  </div>`;
+ });
+}
+window.addCarrinho=function(id){
+ const produto=produtos.find(p=>p.id===id);
+ const tamanho=document.getElementById(`tam-${id}`).value;
+
+ carrinho.push({nome:produto.nome,tamanho,valor:produto.valor});
+ atualizarCarrinho();
+}
+
+function atualizarCarrinho(){
+ const div=document.getElementById('itensCarrinho');
+
+ if(carrinho.length===0){
+  div.innerHTML='Carrinho vazio';
+  return;
+ }
+
+ let total=0;
+ let html='';
+
+ carrinho.forEach(item=>{
+  total += Number(item.valor);
+  html += `• ${item.nome} - Tam ${item.tamanho} - R$ ${item.valor}<br>`;
+ });
+
+ html += `<br><b>Total: R$ ${total.toFixed(2)}</b>`;
+ div.innerHTML=html;
+}
+
+window.finalizarPedido=function(){
+
+ if(carrinho.length===0){
+  alert('Carrinho vazio');
+  return;
+ }
+
+ let msg='Olá! Tenho interesse nessas camisas:%0A%0A';
+
+ let total=0;
+
+ carrinho.forEach(item=>{
+
+  total += Number(item.valor);
+
+  msg += `🏆 ${item.nome}%0A`;
+  msg += `📏 Tamanho: ${item.tamanho}%0A`;
+  msg += `💰 Valor: R$ ${item.valor}%0A%0A`;
+
+ });
+
+ msg += `💵 Total do pedido: R$ ${total.toFixed(2)}`;
+
+ window.open(
+ `https://wa.me/5547991938901?text=${msg}`,
+ '_blank'
+ );
+}
+
+carregar();
+</script>
+</body>
+</html>
