@@ -6,24 +6,193 @@
 <title>Castelhano Sport's</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#0f0f0f;color:#fff}
-.header{background:#111;padding:18px;border-bottom:2px solid #ea580c;position:sticky;top:0;z-index:99}
-.logo{font-size:28px;font-weight:bold;color:#ea580c;text-align:center}
-.sub{text-align:center;color:#aaa;font-size:13px;margin-top:4px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;padding:12px}
-.card{background:#111;border:1px solid #222;border-radius:16px;overflow:hidden}
-.card img{width:100%;height:250px;object-fit:cover}
-.info{padding:14px}
-.nome{font-size:19px;font-weight:bold;margin-bottom:8px}
-.preco{color:#22c55e;font-size:22px;font-weight:bold;margin-bottom:10px}
-.desc{color:#bbb;font-size:14px;margin-bottom:12px}
-select,button{width:100%;padding:12px;border:none;border-radius:10px}
-select{background:#1f1f1f;color:#fff;margin-bottom:10px}
-button{background:#ea580c;color:#fff;font-weight:bold;cursor:pointer}
-.carrinho{position:fixed;bottom:0;width:100%;background:#111;border-top:2px solid #ea580c;padding:15px}
-.finalizar{background:#22c55e}
-#itensCarrinho{font-size:14px;color:#ddd;margin-bottom:10px;max-height:100px;overflow:auto}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif
+}
+
+body{
+background:#0f0f0f;
+color:#fff;
+padding-bottom:120px;
+}
+
+/* HEADER */
+.header{
+background:#111;
+padding:18px;
+border-bottom:2px solid #ea580c;
+position:sticky;
+top:0;
+z-index:99;
+}
+
+.logo{
+font-size:30px;
+font-weight:bold;
+color:#ea580c;
+text-align:center;
+}
+
+.sub{
+text-align:center;
+color:#aaa;
+font-size:13px;
+margin-top:4px;
+}
+
+/* GRID IGUAL LOJA */
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+padding:14px;
+}
+
+/* CARD */
+.card{
+background:transparent;
+border:none;
+overflow:hidden;
+}
+
+/* FOTO PRODUTO */
+.card img{
+width:100%;
+height:190px;
+object-fit:cover;
+border-radius:18px;
+display:block;
+background:#1a1a1a;
+}
+
+/* INFO */
+.info{
+padding:8px 2px;
+}
+
+/* NOME */
+.nome{
+font-size:15px;
+font-weight:600;
+line-height:1.2;
+margin-top:8px;
+margin-bottom:6px;
+
+display:-webkit-box;
+-webkit-line-clamp:2;
+-webkit-box-orient:vertical;
+overflow:hidden;
+min-height:38px;
+}
+
+/* PREÇO */
+.preco{
+color:#22c55e;
+font-size:24px;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+/* ESTOQUE */
+.estoque-box{
+background:#1b1b1b;
+padding:8px;
+border-radius:10px;
+font-size:13px;
+margin-bottom:6px;
+}
+
+/* SELECT */
+select{
+width:100%;
+height:42px;
+border:none;
+border-radius:12px;
+background:#1f1f1f;
+color:#fff;
+padding:0 10px;
+margin-top:8px;
+margin-bottom:8px;
+font-size:14px;
+}
+
+/* BOTÃO */
+button{
+width:100%;
+height:46px;
+border:none;
+border-radius:14px;
+background:#ea0000;
+color:#fff;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* ESGOTADO */
+.esgotado{
+background:#555 !important;
+cursor:not-allowed;
+}
+
+/* CARRINHO */
+.carrinho{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#111;
+border-top:2px solid #ea580c;
+padding:15px;
+z-index:999;
+}
+
+#itensCarrinho{
+font-size:13px;
+color:#ddd;
+margin-bottom:10px;
+max-height:90px;
+overflow:auto;
+}
+
+.finalizar{
+background:#22c55e;
+font-size:18px;
+}
+
+/* RESPONSIVO */
+@media(max-width:600px){
+
+.logo{
+font-size:22px;
+}
+
+.grid{
+gap:12px;
+padding:12px;
+}
+
+.card img{
+height:170px;
+}
+
+.nome{
+font-size:14px;
+min-height:34px;
+}
+
+.preco{
+font-size:21px;
+}
+
+button{
+height:44px;
+font-size:14px;
+}
+}
 </style>
 </head>
 <body>
@@ -82,7 +251,7 @@ function render(){
    let restante=d.total-d.vendido;
 
    estoqueTexto += `
-   <div style="
+  <div class="estoque-box">
    background:#1f1f1f;
    padding:8px;
    border-radius:8px;
@@ -131,11 +300,9 @@ function render(){
       `
       :
       `
-      <button style="
-      background:#ef4444;
-      cursor:not-allowed">
-      ESGOTADO
-      </button>
+      <button class="esgotado">
+ESGOTADO
+</button>
       `
     }
 
