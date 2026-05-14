@@ -349,11 +349,11 @@ background:#2a2a2a;
     </div>
 
     <!-- LOGIN USUÁRIO -->
-    <input
-      type="text"
-      id="loginUsuario"
-      placeholder="Usuário">
-
+   <input
+type="text"
+id="loginUser"
+placeholder="Usuário">
+    
     <input
       type="password"
       id="loginSenha"
@@ -446,7 +446,12 @@ from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import {
 getFirestore,
 collection,
-getDocs
+getDocs,
+doc,
+setDoc,
+getDoc,
+query,
+where
 }
 from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
@@ -708,7 +713,7 @@ window.fecharCadastro = function(){
  }
 
 }
-  window.criarConta =
+ window.criarConta =
 async function(){
 
  try{
@@ -716,20 +721,17 @@ async function(){
   const nome =
   document
   .getElementById('novoNome')
-  .value
-  .trim();
+  .value.trim();
 
-  const usuario =
+  const nomeUsuario =
   document
   .getElementById('novoUsuario')
-  .value
-  .trim();
+  .value.trim();
 
   const email =
   document
   .getElementById('novoEmail')
-  .value
-  .trim();
+  .value.trim();
 
   const senha =
   document
@@ -738,7 +740,7 @@ async function(){
 
   if(
    !nome ||
-   !usuario ||
+   !nomeUsuario ||
    !email ||
    !senha
   ){
@@ -748,7 +750,7 @@ async function(){
    return;
   }
 
-  // cria usuário firebase
+  // cria login
   const cred =
   await createUserWithEmailAndPassword(
    auth,
@@ -756,11 +758,28 @@ async function(){
    senha
   );
 
-  // salva nome do perfil
+  // atualiza perfil
   await updateProfile(
    cred.user,
    {
     displayName:nome
+   }
+  );
+
+  // salva cliente no firestore
+  await setDoc(
+   doc(
+    db,
+    'usuarios',
+    cred.user.uid
+   ),
+   {
+    uid:cred.user.uid,
+    nome:nome,
+    usuario:nomeUsuario,
+    email:email,
+    criadoEm:
+    new Date()
    }
   );
 
@@ -779,17 +798,7 @@ async function(){
    'auth/email-already-in-use'
   ){
    alert(
-    'Este email já está cadastrado'
-   );
-   return;
-  }
-
-  if(
-   e.code ===
-   'auth/weak-password'
-  ){
-   alert(
-    'Senha muito fraca'
+    'Email já cadastrado'
    );
    return;
   }
@@ -801,34 +810,74 @@ async function(){
  }
 
 }
-  window.loginUsuario =
+  
+ window.loginUsuario =
 async function(){
 
  try{
 
-  const email =
+  const usuario =
   document
-  .getElementById('loginUsuario')
+  .getElementById(
+   'loginUser'
+  )
   .value
   .trim();
 
   const senha =
   document
-  .getElementById('loginSenha')
+  .getElementById(
+   'loginSenha'
+  )
   .value;
 
-  if(!email || !senha){
-
+  if(
+   !usuario ||
+   !senha
+  ){
    alert(
     'Preencha usuário e senha'
+   );
+   return;
+  }
+
+  // procurar usuário no Firestore
+  const usuariosRef =
+  collection(
+   db,
+   'usuarios'
+  );
+
+  const q =
+  query(
+   usuariosRef,
+   where(
+    'usuario',
+    '==',
+    usuario
+   )
+  );
+
+  const resultado =
+  await getDocs(q);
+
+  if(resultado.empty){
+
+   alert(
+    'Usuário não encontrado'
    );
 
    return;
   }
 
+  const dados =
+  resultado.docs[0]
+  .data();
+
+  // login pelo email salvo
   await signInWithEmailAndPassword(
    auth,
-   email,
+   dados.email,
    senha
   );
 
