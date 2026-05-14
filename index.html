@@ -731,61 +731,71 @@ onAuthStateChanged(
    email:user.email,
    foto:user.photoURL
   };
-   
-   document
-.getElementById(
-'fotoUsuario'
-)
-.src =
-user.photoURL ||
-'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 
-document
-.getElementById(
-'fotoPerfil'
-)
-.src =
-user.photoURL ||
-'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+  // FOTO PERFIL TOPO
+  document
+  .getElementById(
+  'fotoUsuario'
+  )
+  .src =
+  user.photoURL ||
+  'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 
-document
-.getElementById(
-'nomeUsuarioPerfil'
-)
-.innerText =
-user.displayName ||
-'Cliente';
+  // FOTO MENU
+  document
+  .getElementById(
+  'fotoPerfil'
+  )
+  .src =
+  user.photoURL ||
+  'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 
-document
-.getElementById(
-'emailUsuarioPerfil'
-)
-.innerText =
-user.email;
+  // NOME
+  document
+  .getElementById(
+  'nomeUsuarioPerfil'
+  )
+  .innerText =
+  user.displayName ||
+  'Cliente';
+
+  // EMAIL
+  document
+  .getElementById(
+  'emailUsuarioPerfil'
+  )
+  .innerText =
+  user.email;
 
   // esconder login
   document
-  .getElementById('loginTela')
+  .getElementById(
+  'loginTela'
+  )
   .style.display='none';
 
-  // mostrar site
+  // mostrar catálogo
   document
-  .getElementById('site')
+  .getElementById(
+  'site'
+  )
   .style.display='block';
 
   carregar();
-   resetarTempo();
+  resetarTempo();
 
  }else{
 
-  // mostrar login
   document
-  .getElementById('loginTela')
+  .getElementById(
+  'loginTela'
+  )
   .style.display='flex';
 
-  // esconder site
   document
-  .getElementById('site')
+  .getElementById(
+  'site'
+  )
   .style.display='none';
 
  }
