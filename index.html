@@ -454,7 +454,10 @@ import {
 getAuth,
 GoogleAuthProvider,
 signInWithPopup,
-onAuthStateChanged
+onAuthStateChanged,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+updateProfile
 }
 from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
@@ -705,6 +708,142 @@ window.fecharCadastro = function(){
  }
 
 }
+  window.criarConta =
+async function(){
+
+ try{
+
+  const nome =
+  document
+  .getElementById('novoNome')
+  .value
+  .trim();
+
+  const usuario =
+  document
+  .getElementById('novoUsuario')
+  .value
+  .trim();
+
+  const email =
+  document
+  .getElementById('novoEmail')
+  .value
+  .trim();
+
+  const senha =
+  document
+  .getElementById('novaSenha')
+  .value;
+
+  if(
+   !nome ||
+   !usuario ||
+   !email ||
+   !senha
+  ){
+   alert(
+    'Preencha todos os campos'
+   );
+   return;
+  }
+
+  // cria usuário firebase
+  const cred =
+  await createUserWithEmailAndPassword(
+   auth,
+   email,
+   senha
+  );
+
+  // salva nome do perfil
+  await updateProfile(
+   cred.user,
+   {
+    displayName:nome
+   }
+  );
+
+  alert(
+   'Conta criada com sucesso!'
+  );
+
+  fecharCadastro();
+
+ }catch(e){
+
+  console.log(e);
+
+  if(
+   e.code ===
+   'auth/email-already-in-use'
+  ){
+   alert(
+    'Este email já está cadastrado'
+   );
+   return;
+  }
+
+  if(
+   e.code ===
+   'auth/weak-password'
+  ){
+   alert(
+    'Senha muito fraca'
+   );
+   return;
+  }
+
+  alert(
+   'Erro ao criar conta'
+  );
+
+ }
+
+}
+  window.loginUsuario =
+async function(){
+
+ try{
+
+  const email =
+  document
+  .getElementById('loginUsuario')
+  .value
+  .trim();
+
+  const senha =
+  document
+  .getElementById('loginSenha')
+  .value;
+
+  if(!email || !senha){
+
+   alert(
+    'Preencha usuário e senha'
+   );
+
+   return;
+  }
+
+  await signInWithEmailAndPassword(
+   auth,
+   email,
+   senha
+  );
+
+ }catch(e){
+
+  console.log(e);
+
+  alert(
+   'Usuário ou senha inválidos'
+  );
+
+ }
+
+}
+  
 </script>
 
 </div>
