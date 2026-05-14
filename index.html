@@ -639,20 +639,36 @@ onAuthStateChanged(
 
  if(user){
 
-  usuario = {
-   uid:user.uid,
-   nome:user.displayName,
-   email:user.email,
-   foto:user.photoURL
-  };
+ usuario = {
+  uid:user.uid,
+  nome:user.displayName,
+  email:user.email,
+  foto:user.photoURL
+ };
 
-  document
-  .getElementById(
-   'loginTela'
-  )
-  .style.display='none';
+ // esconde login
+ document
+ .getElementById('loginTela')
+ .style.display='none';
 
- // carregar();
+ // mostra catálogo
+ document
+ .getElementById('site')
+ .style.display='block';
+
+ // carrega produtos
+ carregar();
+
+}else{
+
+ document
+ .getElementById('loginTela')
+ .style.display='flex';
+
+ document
+ .getElementById('site')
+ .style.display='none';
+}
 
  }else{
 
@@ -682,8 +698,22 @@ window.fecharCadastro = function(){
   .style.display='none';
 
 }
-  
+  window.onclick = function(e){
+
+ if(
+  e.target.id ===
+  'modalCadastro'
+ ){
+
+  fecharCadastro();
+
+ }
+
+}
 </script>
-  </div>
+
+</div>
+
 </body>
+  
 </html>
