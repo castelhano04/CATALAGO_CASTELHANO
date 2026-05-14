@@ -428,10 +428,81 @@ class="modal-cadastro">
 <div id="site" style="display:none;">
   
 <div class="header">
-<div class="logo">Castelhano Sport's</div>
-<div class="sub">Represente seu time com estilo!</div>
+
+<div class="topo-header">
+
+<div>
+
+<div class="logo">
+Castelhano Sport's
 </div>
 
+<div class="sub">
+Represente seu time com estilo!
+</div>
+
+</div>
+
+<div
+class="perfil-btn"
+onclick="abrirPerfil()">
+
+<img
+id="fotoUsuario"
+src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MENU PERFIL -->
+<div
+id="perfilModal"
+class="perfil-modal">
+
+<div class="perfil-box">
+
+<div class="perfil-topo">
+
+<img
+id="fotoPerfil"
+src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+
+<h2 id="nomeUsuarioPerfil">
+Usuário
+</h2>
+
+<p id="emailUsuarioPerfil">
+email@email.com
+</p>
+
+</div>
+
+<button>
+📦 Meus pedidos
+</button>
+
+<button>
+❤️ Favoritos
+</button>
+
+<button>
+🚚 Acompanhar pedido
+</button>
+
+<button
+onclick="logout()"
+class="logout-btn">
+
+🚪 Sair da conta
+
+</button>
+
+</div>
+
+</div>
 <div class="grid" id="produtos"></div>
 
 <div class="carrinho">
@@ -462,7 +533,10 @@ signInWithPopup,
 onAuthStateChanged,
 createUserWithEmailAndPassword,
 signInWithEmailAndPassword,
-updateProfile
+updateProfile,
+signOut,
+setPersistence,
+browserLocalPersistence
 }
 from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
@@ -479,6 +553,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const auth = getAuth(app);
+  await setPersistence(
+ auth,
+ browserLocalPersistence
+);
 const provider = new GoogleAuthProvider();
 
 let usuario = null;
@@ -653,6 +731,37 @@ onAuthStateChanged(
    email:user.email,
    foto:user.photoURL
   };
+   
+   document
+.getElementById(
+'fotoUsuario'
+)
+.src =
+user.photoURL ||
+'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+
+document
+.getElementById(
+'fotoPerfil'
+)
+.src =
+user.photoURL ||
+'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+
+document
+.getElementById(
+'nomeUsuarioPerfil'
+)
+.innerText =
+user.displayName ||
+'Cliente';
+
+document
+.getElementById(
+'emailUsuarioPerfil'
+)
+.innerText =
+user.email;
 
   // esconder login
   document
@@ -665,6 +774,7 @@ onAuthStateChanged(
   .style.display='block';
 
   carregar();
+   resetarTempo();
 
  }else{
 
@@ -892,7 +1002,180 @@ async function(){
  }
 
 }
-  
+  // =====================
+// TIMER DE INATIVIDADE
+// =====================
+
+let tempoInatividade;
+
+// 2min30s = 150000
+const LIMITE = 150000;
+
+function resetarTempo(){
+
+ clearTimeout(
+  tempoInatividade
+ );
+
+ tempoInatividade =
+ setTimeout(
+  logoutAutomatico,
+  LIMITE
+ );
+
+}
+
+async function logoutAutomatico(){
+
+ try{
+
+  await signOut(auth);
+
+  alert(
+   'Sessão encerrada por inatividade'
+  );
+
+ }catch(e){
+
+  console.log(e);
+
+ }
+
+}
+
+// detectar atividade do usuário
+[
+'click',
+'mousemove',
+'keydown',
+'scroll',
+'touchstart'
+]
+.forEach(evento=>{
+
+ document
+ .addEventListener(
+  evento,
+  resetarTempo
+ );
+
+});
+
+// iniciar timer
+resetarTempo();
+  /* HEADER TOPO */
+
+.topo-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.perfil-btn img{
+width:48px;
+height:48px;
+border-radius:50%;
+border:2px solid #ea580c;
+cursor:pointer;
+object-fit:cover;
+}
+
+/* PERFIL */
+
+.perfil-modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+z-index:9999999;
+justify-content:flex-end;
+}
+
+.perfil-box{
+width:320px;
+height:100%;
+background:#111;
+padding:25px;
+animation:slide .2s ease;
+}
+
+@keyframes slide{
+from{
+transform:translateX(100%);
+}
+to{
+transform:translateX(0);
+}
+}
+
+.perfil-topo{
+text-align:center;
+margin-bottom:25px;
+}
+
+.perfil-topo img{
+width:90px;
+height:90px;
+border-radius:50%;
+margin-bottom:10px;
+border:3px solid #ea580c;
+object-fit:cover;
+}
+
+.perfil-topo h2{
+font-size:22px;
+margin-bottom:5px;
+}
+
+.perfil-topo p{
+color:#999;
+font-size:14px;
+}
+
+.perfil-box button{
+margin-bottom:10px;
+background:#1b1b1b;
+border-radius:14px;
+height:55px;
+}
+
+.logout-btn{
+background:#7f1d1d !important;
+}
+  window.abrirPerfil =
+function(){
+
+ document
+ .getElementById(
+  'perfilModal'
+ )
+ .style.display='flex';
+
+}
+
+window.onclick =
+function(e){
+
+ if(
+  e.target.id ===
+  'perfilModal'
+ ){
+
+  document
+  .getElementById(
+   'perfilModal'
+  )
+  .style.display='none';
+ }
+
+}
+
+window.logout =
+async function(){
+
+ await signOut(auth);
+
+}
 </script>
 
 </div>
