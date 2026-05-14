@@ -923,6 +923,99 @@ window.fecharCadastro = function(){
  }
 
 }
+  window.criarConta =
+async function(){
+
+ try{
+
+  const nome =
+  document
+  .getElementById('novoNome')
+  .value.trim();
+
+  const nomeUsuario =
+  document
+  .getElementById('novoUsuario')
+  .value.trim();
+
+  const email =
+  document
+  .getElementById('novoEmail')
+  .value.trim();
+
+  const senha =
+  document
+  .getElementById('novaSenha')
+  .value;
+
+  if(
+   !nome ||
+   !nomeUsuario ||
+   !email ||
+   !senha
+  ){
+   alert(
+    'Preencha todos os campos'
+   );
+   return;
+  }
+
+  const cred =
+  await createUserWithEmailAndPassword(
+   auth,
+   email,
+   senha
+  );
+
+  await updateProfile(
+   cred.user,
+   {
+    displayName:nome
+   }
+  );
+
+  await setDoc(
+   doc(
+    db,
+    'usuarios',
+    cred.user.uid
+   ),
+   {
+    uid:cred.user.uid,
+    nome:nome,
+    usuario:nomeUsuario,
+    email:email,
+    criadoEm:new Date()
+   }
+  );
+
+  alert(
+   'Conta criada com sucesso!'
+  );
+
+  fecharCadastro();
+
+ }catch(e){
+
+  console.log(e);
+
+  if(
+   e.code ===
+   'auth/email-already-in-use'
+  ){
+   alert(
+    'Email já cadastrado'
+   );
+   return;
+  }
+
+  alert(
+   'Erro ao criar conta'
+  );
+
+ }
+
+}
   
  window.loginUsuario =
 async function(){
@@ -1075,23 +1168,6 @@ function(){
   'perfilModal'
  )
  .style.display='flex';
-
-}
-
-window.onclick =
-function(e){
-
- if(
-  e.target.id ===
-  'perfilModal'
- ){
-
-  document
-  .getElementById(
-   'perfilModal'
-  )
-  .style.display='none';
- }
 
 }
 
