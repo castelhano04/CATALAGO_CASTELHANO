@@ -136,7 +136,8 @@ button{
   }
 
 }
-  /* LOGIN */
+
+  /* LOGIN PROFISSIONAL */
 
 #loginTela{
 position:fixed;
@@ -145,111 +146,282 @@ background:
 linear-gradient(
 180deg,
 #0f0f0f,
-#181818
+#1a1a1a
 );
 display:flex;
 justify-content:center;
 align-items:center;
-z-index:999999;
 padding:20px;
+z-index:999999;
 }
 
-.login-box{
+.login-card{
 width:100%;
-max-width:360px;
+max-width:400px;
 background:#111;
 border:1px solid #242424;
-border-radius:28px;
+border-radius:30px;
 padding:35px 25px;
 text-align:center;
 box-shadow:
-0 0 30px
-rgba(0,0,0,.5);
+0 0 35px rgba(0,0,0,.5);
 }
 
-.login-logo{
-width:80px;
-height:80px;
+.logo-login{
+width:85px;
+height:85px;
 background:#ea580c;
 border-radius:50%;
 display:flex;
-align-items:center;
 justify-content:center;
-font-size:35px;
+align-items:center;
+font-size:38px;
 margin:auto;
 margin-bottom:20px;
 }
 
-.login-box h1{
-font-size:26px;
-color:#fff;
+.login-card h1{
+font-size:28px;
 margin-bottom:8px;
 }
 
-.login-box p{
-font-size:14px;
+.login-card p{
 color:#9ca3af;
-line-height:1.5;
+font-size:14px;
 margin-bottom:25px;
 }
 
-.login-box button{
+.google-btn{
 width:100%;
-height:56px;
+height:55px;
 border:none;
-border-radius:16px;
+border-radius:18px;
 background:#fff;
 color:#111;
 font-size:16px;
-font-weight:700;
+font-weight:bold;
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 gap:10px;
 cursor:pointer;
-transition:.2s;
 }
 
-.login-box button:hover{
-transform:scale(1.02);
-}
-
-.login-box img{
+.google-btn img{
 width:24px;
 height:24px;
 }
+
+.divisor{
+margin:22px 0;
+position:relative;
+color:#666;
+}
+
+.divisor::before{
+content:'';
+position:absolute;
+left:0;
+top:50%;
+width:42%;
+height:1px;
+background:#333;
+}
+
+.divisor::after{
+content:'';
+position:absolute;
+right:0;
+top:50%;
+width:42%;
+height:1px;
+background:#333;
+}
+
+.login-card input{
+width:100%;
+height:55px;
+border:none;
+border-radius:16px;
+background:#1b1b1b;
+padding:15px;
+color:white;
+font-size:15px;
+margin-bottom:10px;
+}
+
+.login-btn{
+width:100%;
+height:55px;
+border:none;
+border-radius:18px;
+background:#ea580c;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.criar-conta{
+margin-top:18px;
+font-size:14px;
+color:#aaa;
+}
+
+.criar-conta span{
+color:#ea580c;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* MODAL */
+
+.modal-cadastro{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.7);
+justify-content:center;
+align-items:center;
+padding:20px;
+z-index:9999999;
+}
+
+.modal-box{
+width:100%;
+max-width:400px;
+background:#111;
+padding:30px;
+border-radius:30px;
+}
+
+.modal-box h2{
+margin-bottom:20px;
+text-align:center;
+}
+
+.modal-box input{
+width:100%;
+height:55px;
+margin-bottom:10px;
+border:none;
+border-radius:14px;
+padding:15px;
+background:#1b1b1b;
+color:white;
+}
+
+.fechar-modal{
+margin-top:10px;
+background:#2a2a2a;
 }
   
 </style>
 </head>
 <body>
 
- <div id="loginTela">
+<!-- LOGIN -->
+<div id="loginTela">
 
-<div class="login-box">
+  <div class="login-card">
 
-<div class="login-logo">
-⚽
+    <div class="logo-login">
+      ⚽
+    </div>
+
+    <h1>Castelhano Sport's</h1>
+
+    <p>
+      Represente seu time com estilo!
+    </p>
+
+    <!-- LOGIN GOOGLE -->
+    <button
+      class="google-btn"
+      onclick="loginGoogle()">
+
+      <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+
+      Entrar com Google
+    </button>
+
+    <div class="divisor">
+      <span>OU</span>
+    </div>
+
+    <!-- LOGIN USUÁRIO -->
+    <input
+      type="text"
+      id="loginUsuario"
+      placeholder="Usuário">
+
+    <input
+      type="password"
+      id="loginSenha"
+      placeholder="Senha">
+
+    <button
+      class="login-btn"
+      onclick="loginUsuario()">
+
+      ENTRAR
+    </button>
+
+    <div class="criar-conta">
+
+      Ainda não possui conta?
+
+      <span onclick="abrirCadastro()">
+        Criar conta
+      </span>
+
+    </div>
+
+  </div>
+
 </div>
 
-<h1>
-Castelhano Sport's
-</h1>
 
-<p>
-Entre para comprar e
-acompanhar seus pedidos
-</p>
+<!-- MODAL DE CADASTRO -->
+<div
+id="modalCadastro"
+class="modal-cadastro">
 
-<button onclick="loginGoogle()">
+  <div class="modal-box">
 
-<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
+    <h2>Criar Conta</h2>
 
-Entrar com Google
+    <input
+      type="text"
+      id="novoNome"
+      placeholder="Nome completo">
 
-</button>
+    <input
+      type="text"
+      id="novoUsuario"
+      placeholder="Nome de usuário">
 
-</div>
+    <input
+      type="email"
+      id="novoEmail"
+      placeholder="Email">
+
+    <input
+      type="password"
+      id="novaSenha"
+      placeholder="Senha">
+
+    <button onclick="criarConta()">
+      CRIAR CONTA
+    </button>
+
+    <button
+      class="fechar-modal"
+      onclick="fecharCadastro()">
+
+      CANCELAR
+    </button>
+
+  </div>
 
 </div>
 
