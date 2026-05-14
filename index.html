@@ -314,6 +314,85 @@ color:white;
 margin-top:10px;
 background:#2a2a2a;
 }
+  /* HEADER TOPO */
+
+.topo-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.perfil-btn img{
+width:48px;
+height:48px;
+border-radius:50%;
+border:2px solid #ea580c;
+cursor:pointer;
+object-fit:cover;
+}
+
+/* PERFIL */
+
+.perfil-modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+z-index:9999999;
+justify-content:flex-end;
+}
+
+.perfil-box{
+width:320px;
+height:100%;
+background:#111;
+padding:25px;
+animation:slide .2s ease;
+}
+
+@keyframes slide{
+from{
+transform:translateX(100%);
+}
+to{
+transform:translateX(0);
+}
+}
+
+.perfil-topo{
+text-align:center;
+margin-bottom:25px;
+}
+
+.perfil-topo img{
+width:90px;
+height:90px;
+border-radius:50%;
+margin-bottom:10px;
+border:3px solid #ea580c;
+object-fit:cover;
+}
+
+.perfil-topo h2{
+font-size:22px;
+margin-bottom:5px;
+}
+
+.perfil-topo p{
+color:#999;
+font-size:14px;
+}
+
+.perfil-box button{
+margin-bottom:10px;
+background:#1b1b1b;
+border-radius:14px;
+height:55px;
+}
+
+.logout-btn{
+background:#7f1d1d !important;
+}
   
 </style>
 </head>
@@ -821,111 +900,25 @@ window.fecharCadastro = function(){
   .style.display='none';
 
 }
-  window.onclick = function(e){
+ window.onclick = function(e){
 
  if(
   e.target.id ===
   'modalCadastro'
  ){
-
   fecharCadastro();
-
  }
 
-}
- window.criarConta =
-async function(){
+ if(
+  e.target.id ===
+  'perfilModal'
+ ){
 
- try{
-
-  const nome =
   document
-  .getElementById('novoNome')
-  .value.trim();
-
-  const nomeUsuario =
-  document
-  .getElementById('novoUsuario')
-  .value.trim();
-
-  const email =
-  document
-  .getElementById('novoEmail')
-  .value.trim();
-
-  const senha =
-  document
-  .getElementById('novaSenha')
-  .value;
-
-  if(
-   !nome ||
-   !nomeUsuario ||
-   !email ||
-   !senha
-  ){
-   alert(
-    'Preencha todos os campos'
-   );
-   return;
-  }
-
-  // cria login
-  const cred =
-  await createUserWithEmailAndPassword(
-   auth,
-   email,
-   senha
-  );
-
-  // atualiza perfil
-  await updateProfile(
-   cred.user,
-   {
-    displayName:nome
-   }
-  );
-
-  // salva cliente no firestore
-  await setDoc(
-   doc(
-    db,
-    'usuarios',
-    cred.user.uid
-   ),
-   {
-    uid:cred.user.uid,
-    nome:nome,
-    usuario:nomeUsuario,
-    email:email,
-    criadoEm:
-    new Date()
-   }
-  );
-
-  alert(
-   'Conta criada com sucesso!'
-  );
-
-  fecharCadastro();
-
- }catch(e){
-
-  console.log(e);
-
-  if(
-   e.code ===
-   'auth/email-already-in-use'
-  ){
-   alert(
-    'Email já cadastrado'
-   );
-   return;
-  }
-
-  alert(
-   'Erro ao criar conta'
-  );
+  .getElementById(
+   'perfilModal'
+  )
+  .style.display='none';
 
  }
 
@@ -1073,85 +1066,7 @@ async function logoutAutomatico(){
 
 // iniciar timer
 resetarTempo();
-  /* HEADER TOPO */
 
-.topo-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.perfil-btn img{
-width:48px;
-height:48px;
-border-radius:50%;
-border:2px solid #ea580c;
-cursor:pointer;
-object-fit:cover;
-}
-
-/* PERFIL */
-
-.perfil-modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.65);
-z-index:9999999;
-justify-content:flex-end;
-}
-
-.perfil-box{
-width:320px;
-height:100%;
-background:#111;
-padding:25px;
-animation:slide .2s ease;
-}
-
-@keyframes slide{
-from{
-transform:translateX(100%);
-}
-to{
-transform:translateX(0);
-}
-}
-
-.perfil-topo{
-text-align:center;
-margin-bottom:25px;
-}
-
-.perfil-topo img{
-width:90px;
-height:90px;
-border-radius:50%;
-margin-bottom:10px;
-border:3px solid #ea580c;
-object-fit:cover;
-}
-
-.perfil-topo h2{
-font-size:22px;
-margin-bottom:5px;
-}
-
-.perfil-topo p{
-color:#999;
-font-size:14px;
-}
-
-.perfil-box button{
-margin-bottom:10px;
-background:#1b1b1b;
-border-radius:14px;
-height:55px;
-}
-
-.logout-btn{
-background:#7f1d1d !important;
-}
   window.abrirPerfil =
 function(){
 
