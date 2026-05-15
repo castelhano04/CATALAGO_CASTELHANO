@@ -15,12 +15,13 @@ export default async function handler(req, res) {
       'https://api.mercadopago.com/checkout/preferences',
       {
         method:'POST',
+
         headers:{
           'Content-Type':
           'application/json',
 
           Authorization:
-          'Bearer SEU_ACCESS_TOKEN'
+          'APP_USR-6929688768274015-051508-9521101e81d3df1d61c637fc32ccf991-1444532904'
         },
 
         body:JSON.stringify({
@@ -42,15 +43,18 @@ export default async function handler(req, res) {
 
           payer:{
             email:
-            body.email
+            body.email || 'cliente@email.com'
           },
 
           back_urls:{
             success:
-            'https://SEUSITE.vercel.app/sucesso',
+            'https://castelhano-sports.vercel.app/sucesso',
 
             failure:
-            'https://SEUSITE.vercel.app/erro'
+            'https://castelhano-sports.vercel.app/erro',
+
+            pending:
+            'https://castelhano-sports.vercel.app/pendente'
           },
 
           auto_return:
