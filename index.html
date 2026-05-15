@@ -750,7 +750,7 @@ function atualizarCarrinho(){
 }
 
 window.finalizarPedido =
-async function(){
+function(){
 
  if(carrinho.length === 0){
 
@@ -761,59 +761,70 @@ async function(){
   return;
  }
 
- try{
+ let numeroPedido =
+ Math.floor(
+  10000 +
+  Math.random() * 90000
+ );
 
-  const response =
-  await fetch(
-   '/api/criar-pagamento',
-   {
-    method:'POST',
+ let msg =
+`🛒 *NOVO PEDIDO - CASTELHANO SPORT'S*%0A%0A`;
 
-    headers:{
-     'Content-Type':
-     'application/json'
-    },
+ msg +=
+`🆔 Pedido: #${numeroPedido}%0A`;
 
-    body:JSON.stringify({
+ msg +=
+`👤 Cliente: ${
+usuario?.nome || 'Cliente'
+}%0A`;
 
-     itens:carrinho,
+ msg +=
+`📧 Email: ${
+usuario?.email || 'Não informado'
+}%0A%0A`;
 
-     email:
-     usuario?.email ||
-     'cliente@email.com'
+ msg +=
+`📦 *PRODUTOS:*%0A%0A`;
 
-    })
-   }
-  );
+ let total = 0;
 
-  const data =
-  await response.json();
+ carrinho.forEach(
+ (item,index)=>{
 
-  console.log(data);
+  total +=
+  Number(item.valor);
 
-  if(data.init_point){
+  msg +=
+`${index+1}️⃣ ${
+item.nome
+}%0A`;
 
-   window.location.href =
-   data.init_point;
+  msg +=
+`📏 Tamanho: ${
+item.tamanho
+}%0A`;
 
-  }else{
+  msg +=
+`💰 Valor: R$ ${
+item.valor
+}%0A%0A`;
 
-   alert(
-    'Erro ao gerar pagamento'
-   );
+ });
 
-   console.log(data);
-  }
+ msg +=
+`💵 *TOTAL:* R$ ${
+total.toFixed(2)
+}%0A%0A`;
 
- }catch(e){
+ msg +=
+`💳 Pagamento:%0A`;
+ msg +=
+`PIX ou boleto a combinar`;
 
-  console.log(e);
-
-  alert(
-   'Erro ao conectar com Mercado Pago'
-  );
-
- }
+ window.open(
+`https://wa.me/5547991938901?text=${msg}`,
+'_blank'
+ );
 
 }
 
