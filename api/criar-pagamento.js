@@ -20,19 +20,25 @@ export default async function handler(req, res) {
           'Content-Type':
           'application/json',
 
-          Authorization:
-          'APP_USR-6929688768274015-051508-9521101e81d3df1d61c637fc32ccf991-1444532904'
+          'Authorization':
+          'Bearer APP_USR-6929688768274015-051508-9521101e81d3df1d61c637fc32ccf991-1444532904'
         },
 
         body:JSON.stringify({
 
           items:
           body.itens.map(item=>({
+
+            id:
+            String(Date.now()),
+
             title:
             `${item.nome} - Tam ${item.tamanho}`,
 
             quantity:
-            item.quantidade || 1,
+            Number(
+              item.quantidade || 1
+            ),
 
             currency_id:
             'BRL',
@@ -43,10 +49,26 @@ export default async function handler(req, res) {
 
           payer:{
             email:
-            body.email || 'cliente@email.com'
+            body.email ||
+            'cliente@email.com'
           },
 
+          payment_methods:{
+            excluded_payment_types:[],
+            installments:12
+          },
+
+          statement_descriptor:
+          'CASTELHANO SPORTS',
+
+          external_reference:
+          `PEDIDO_${Date.now()}`,
+
+          notification_url:
+          'https://castelhano-sports.vercel.app/api/webhook',
+
           back_urls:{
+
             success:
             'https://castelhano-sports.vercel.app/sucesso',
 
@@ -66,15 +88,26 @@ export default async function handler(req, res) {
     const data =
     await response.json();
 
-    return res.status(200)
-    .json(data);
+    console.log(data);
+
+    if(data.id){
+
+      return res
+      .status(200)
+      .json(data);
+
+    }else{
+
+      return res
+      .status(400)
+      .json(data);
+    }
 
   }catch(e){
 
     console.log(e);
 
-    return res.status(500)
-    .json({
+    return res.status(500).json({
       erro:e.message
     });
 
