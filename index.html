@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Castelhano Sport's</title>
 
 <style>
@@ -10,507 +11,155 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif
+font-family:Arial,sans-serif;
 }
 
 body{
 background:#0f0f0f;
 color:#fff;
-padding-bottom:95px;
+padding-bottom:160px;
 overflow-x:hidden;
 }
 
 /* HEADER */
 .header{
 background:#111;
-padding:14px;
+padding:15px;
 border-bottom:2px solid #ea580c;
 position:sticky;
 top:0;
 z-index:999;
+text-align:center;
 }
 
 .logo{
-font-size:22px;
+font-size:24px;
 font-weight:bold;
 color:#ea580c;
-text-align:center;
 }
 
 .sub{
-text-align:center;
-font-size:11px;
+font-size:12px;
 color:#aaa;
 margin-top:3px;
 }
 
-/* GRADE */
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:8px;
 padding:8px;
 }
-  
+
 .card{
-  background:#111;
-  border-radius:10px;
-  overflow:hidden;
-  border:1px solid #222;
-  padding:6px;
+background:#111;
+border-radius:12px;
+overflow:hidden;
+border:1px solid #222;
+padding:6px;
 }
 
 .card img{
-  width:100%;
-  height:120px; /* menor */
-  object-fit:contain; /* mostra a camisa inteira */
-  border-radius:10px;
-  display:block;
-  background:#181818;
-  padding:4px;
+width:100%;
+height:130px;
+object-fit:contain;
+background:#181818;
+border-radius:10px;
+padding:5px;
 }
 
 .info{
-  padding:6px 2px;
+padding:6px 2px;
 }
 
 .nome{
-  font-size:14px;
-  font-weight:bold;
-  margin-bottom:4px;
-  line-height:1.2;
-  
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
+font-size:14px;
+font-weight:bold;
+margin-bottom:5px;
+
+display:-webkit-box;
+-webkit-line-clamp:2;
+-webkit-box-orient:vertical;
+overflow:hidden;
 }
 
 .preco{
-  color:#22c55e;
-  font-size:22px;
-  font-weight:bold;
-  margin-bottom:8px;
-}
-
-.estoque-item{
-  background:#1f1f1f;
-  padding:5px 8px;
-  border-radius:8px;
-  font-size:12px;
-  margin-bottom:5px;
-}
-
-select{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid #333;
-  background:#1a1a1a;
-  color:white;
-  font-size:13px;
-  margin-top:5px;
-}
-
-button{
-  width:100%;
-  padding:11px;
-  border:none;
-  border-radius:10px;
-  background:#ea580c;
-  color:white;
-  font-weight:bold;
-  margin-top:8px;
-  cursor:pointer;
-  font-size:13px;
-}
-
-@media (min-width:768px){
-  .grid{
-    grid-template-columns:
-    repeat(auto-fill,minmax(220px,1fr));
-  }
-
-  .card img{
-    height:220px;
-  }
-
-}
-
-  /* LOGIN PROFISSIONAL */
-
-#loginTela{
-position:fixed;
-inset:0;
-background:
-linear-gradient(
-180deg,
-#0f0f0f,
-#1a1a1a
-);
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
-z-index:999999;
-}
-
-.login-card{
-width:100%;
-max-width:400px;
-background:#111;
-border:1px solid #242424;
-border-radius:30px;
-padding:35px 25px;
-text-align:center;
-box-shadow:
-0 0 35px rgba(0,0,0,.5);
-}
-
-.logo-login{
-width:85px;
-height:85px;
-background:#ea580c;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:38px;
-margin:auto;
-margin-bottom:20px;
-}
-
-.login-card h1{
-font-size:28px;
+color:#22c55e;
+font-size:22px;
+font-weight:bold;
 margin-bottom:8px;
 }
 
-.login-card p{
-color:#9ca3af;
-font-size:14px;
-margin-bottom:25px;
-}
-
-.google-btn{
-width:100%;
-height:55px;
-border:none;
-border-radius:18px;
-background:#fff;
-color:#111;
-font-size:16px;
-font-weight:bold;
-display:flex;
-justify-content:center;
-align-items:center;
-gap:10px;
-cursor:pointer;
-}
-
-.google-btn img{
-width:24px;
-height:24px;
-}
-
-.divisor{
-margin:22px 0;
-position:relative;
-color:#666;
-}
-
-.divisor::before{
-content:'';
-position:absolute;
-left:0;
-top:50%;
-width:42%;
-height:1px;
-background:#333;
-}
-
-.divisor::after{
-content:'';
-position:absolute;
-right:0;
-top:50%;
-width:42%;
-height:1px;
-background:#333;
-}
-
-.login-card input{
-width:100%;
-height:55px;
-border:none;
-border-radius:16px;
-background:#1b1b1b;
-padding:15px;
-color:white;
-font-size:15px;
-margin-bottom:10px;
-}
-
-.login-btn{
-width:100%;
-height:55px;
-border:none;
-border-radius:18px;
-background:#ea580c;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.criar-conta{
-margin-top:18px;
-font-size:14px;
-color:#aaa;
-}
-
-.criar-conta span{
-color:#ea580c;
-font-weight:bold;
-cursor:pointer;
-}
-
-/* MODAL */
-
-.modal-cadastro{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.7);
-justify-content:center;
-align-items:center;
-padding:20px;
-z-index:9999999;
-}
-
-.modal-box{
-width:100%;
-max-width:400px;
-background:#111;
-padding:30px;
-border-radius:30px;
-}
-
-.modal-box h2{
-margin-bottom:20px;
-text-align:center;
-}
-
-.modal-box input{
-width:100%;
-height:55px;
-margin-bottom:10px;
-border:none;
-border-radius:14px;
-padding:15px;
-background:#1b1b1b;
-color:white;
-}
-
-.fechar-modal{
-margin-top:10px;
-background:#2a2a2a;
-}
-  /* HEADER TOPO */
-
-.topo-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.perfil-btn img{
-width:48px;
-height:48px;
-border-radius:50%;
-border:2px solid #ea580c;
-cursor:pointer;
-object-fit:cover;
-}
-
-/* PERFIL */
-
-.perfil-modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.65);
-z-index:9999999;
-justify-content:flex-end;
-}
-
-.perfil-box{
-width:320px;
-height:100%;
-background:#111;
-padding:25px;
-animation:slide .2s ease;
-}
-
-@keyframes slide{
-from{
-transform:translateX(100%);
-}
-to{
-transform:translateX(0);
-}
-}
-
-.perfil-topo{
-text-align:center;
-margin-bottom:25px;
-}
-
-.perfil-topo img{
-width:90px;
-height:90px;
-border-radius:50%;
-margin-bottom:10px;
-border:3px solid #ea580c;
-object-fit:cover;
-}
-
-.perfil-topo h2{
-font-size:22px;
+.estoque-item{
+background:#1f1f1f;
+padding:5px 8px;
+border-radius:8px;
+font-size:12px;
 margin-bottom:5px;
 }
 
-.perfil-topo p{
-color:#999;
-font-size:14px;
+select{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #333;
+background:#1a1a1a;
+color:#fff;
+font-size:13px;
+margin-top:5px;
 }
 
-.perfil-box button{
-margin-bottom:10px;
-background:#1b1b1b;
-border-radius:14px;
-height:55px;
+button{
+width:100%;
+padding:11px;
+border:none;
+border-radius:10px;
+background:#ea580c;
+color:white;
+font-weight:bold;
+margin-top:8px;
+cursor:pointer;
+font-size:13px;
 }
 
-.logout-btn{
-background:#7f1d1d !important;
+/* CARRINHO */
+.carrinho{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#111;
+border-top:2px solid #ea580c;
+padding:12px;
+z-index:999;
+max-height:250px;
+overflow:auto;
 }
-  
+
+.finalizar{
+background:#16a34a;
+margin-top:10px;
+}
+
+@media(min-width:768px){
+
+.grid{
+grid-template-columns:
+repeat(auto-fill,minmax(220px,1fr));
+}
+
+.card img{
+height:220px;
+}
+
+}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="loginTela">
-
-  <div class="login-card">
-
-    <div class="logo-login">
-      ⚽
-    </div>
-
-    <h1>Castelhano Sport's</h1>
-
-    <p>
-      Represente seu time com estilo!
-    </p>
-
-    <!-- LOGIN GOOGLE -->
-    <button
-      class="google-btn"
-      onclick="loginGoogle()">
-
-      <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
-
-      Entrar com Google
-    </button>
-
-    <div class="divisor">
-      <span>OU</span>
-    </div>
-
-    <!-- LOGIN USUÁRIO -->
-   <input
-type="text"
-id="loginUser"
-placeholder="Usuário">
-    
-    <input
-      type="password"
-      id="loginSenha"
-      placeholder="Senha">
-
-    <button
-      class="login-btn"
-      onclick="loginUsuario()">
-
-      ENTRAR
-    </button>
-
-    <div class="criar-conta">
-
-      Ainda não possui conta?
-
-      <span onclick="abrirCadastro()">
-        Criar conta
-      </span>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- MODAL DE CADASTRO -->
-<div
-id="modalCadastro"
-class="modal-cadastro">
-
-  <div class="modal-box">
-
-    <h2>Criar Conta</h2>
-
-    <input
-      type="text"
-      id="novoNome"
-      placeholder="Nome completo">
-
-    <input
-      type="text"
-      id="novoUsuario"
-      placeholder="Nome de usuário">
-
-    <input
-      type="email"
-      id="novoEmail"
-      placeholder="Email">
-
-    <input
-      type="password"
-      id="novaSenha"
-      placeholder="Senha">
-
-    <button onclick="criarConta()">
-      CRIAR CONTA
-    </button>
-
-    <button
-      class="fechar-modal"
-      onclick="fecharCadastro()">
-
-      CANCELAR
-    </button>
-
-  </div>
-
-</div>
-  
-<div id="site" style="display:none;">
-  
+<!-- HEADER -->
 <div class="header">
-
-<div class="topo-header">
-
-<div>
 
 <div class="logo">
 Castelhano Sport's
@@ -522,806 +171,1430 @@ Represente seu time com estilo!
 
 </div>
 
-<div
-class="perfil-btn"
-onclick="abrirPerfil()">
-
-<img
-id="fotoUsuario"
-src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-
-</div>
-
-</div>
-
-</div>
-
-<!-- MENU PERFIL -->
-<div
-id="perfilModal"
-class="perfil-modal">
-
-<div class="perfil-box">
-
-<div class="perfil-topo">
-
-<img
-id="fotoPerfil"
-src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-
-<h2 id="nomeUsuarioPerfil">
-Usuário
-</h2>
-
-<p id="emailUsuarioPerfil">
-email@email.com
-</p>
-
-</div>
-
-<button>
-📦 Meus pedidos
-</button>
-
-<button>
-❤️ Favoritos
-</button>
-
-<button>
-🚚 Acompanhar pedido
-</button>
-
-<button
-onclick="logout()"
-class="logout-btn">
-
-🚪 Sair da conta
-
-</button>
-
-</div>
-
-</div>
+<!-- PRODUTOS -->
 <div class="grid" id="produtos"></div>
 
+<!-- CARRINHO -->
 <div class="carrinho">
-<div id="itensCarrinho">Carrinho vazio</div>
-<button class="finalizar" onclick="finalizarPedido()">FINALIZAR PEDIDO</button>
+
+<div id="itensCarrinho">
+Carrinho vazio
+</div>
+
+<button
+class="finalizar"
+onclick="finalizarPedido()">
+
+FINALIZAR PEDIDO
+
+</button>
+
 </div>
 
 <script type="module">
+
 import { initializeApp }
 from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 
 import {
 getFirestore,
 collection,
-getDocs,
-doc,
-setDoc,
-getDoc,
-query,
-where
+getDocs
 }
 from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-import {
-getAuth,
-GoogleAuthProvider,
-signInWithPopup,
-onAuthStateChanged,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-updateProfile,
-signOut,
-setPersistence,
-browserLocalPersistence
-}
-from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+/* FIREBASE */
 
 const firebaseConfig = {
-apiKey:'AIzaSyD4TfY6Iwrju_aaG1vpN-q1Z9LyiDBeQvQ',
-authDomain:'estoque-app-13f1d.firebaseapp.com',
-projectId:'estoque-app-13f1d',
-storageBucket:'estoque-app-13f1d.firebasestorage.app',
-messagingSenderId:'193095930583',
-appId:'1:193095930583:web:88587ee9f4e10076619692'
-};
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+apiKey:'<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const auth = getAuth(app);
-  await setPersistence(
- auth,
- browserLocalPersistence
-);
-  
-const provider =
-new GoogleAuthProvider();
+<title>Castelhano Sport's</title>
 
-window.loginGoogle =
-async function(){
-
- try{
-
-  await signInWithPopup(
-   auth,
-   provider
-  );
-
- }catch(e){
-
-  console.log(e);
-
-  alert(
-   'Erro ao fazer login'
-  );
-
- }
-
-}
-  
-
-let usuario = null;
-
-let produtos=[];
-let carrinho=[];
-
-async function carregar(){
- const snap = await getDocs(collection(db,'produtos'));
- produtos=[];
- snap.forEach(doc=>produtos.push({id:doc.id,...doc.data()}));
- render();
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
-function render(){
- const lista=document.getElementById('produtos');
- lista.innerHTML='';
-
- produtos.forEach(produto=>{
-
-  let opcoes='';
-  let disponivel=false;
-  let estoqueTexto='';
-
-  for(let t in produto.tamanhos){
-
-   let d=produto.tamanhos[t];
-   let restante=d.total-d.vendido;
-
-  estoqueTexto += `
-<div class="estoque-item">
-${t}: ${restante} disponível
-</div>`;
-
-   if(restante>0){
-    disponivel=true;
-
-    opcoes += `
-    <option value="${t}">
-    ${t} (${restante} disponíveis)
-    </option>`;
-   }
-  }
-
-  lista.innerHTML += `
-  <div class="card">
-
-   <img src="${produto.imagens?.[0] || produto.img}">
-
-   <div class="info">
-
-    <div class="nome">
-    ${produto.nome}
-    </div>
-
-    <div class="preco">
-    R$ ${produto.valor}
-    </div>
-
-    ${estoqueTexto}
-
-    ${
-      disponivel
-      ?
-      `
-      <select id="tam-${produto.id}">
-      ${opcoes}
-      </select>
-
-      <button onclick="addCarrinho('${produto.id}')">
-      ADICIONAR AO CARRINHO
-      </button>
-      `
-      :
-      `
-      <button class="esgotado">
-ESGOTADO
-</button>
-      `
-    }
-
-   </div>
-  </div>`;
- });
-}
-window.addCarrinho=function(id){
-
- const produto =
- produtos.find(
- p=>p.id===id
- );
-
- const tamanho =
- document.getElementById(
- `tam-${id}`
- ).value;
-
- const existente =
- carrinho.find(
- item=>
- item.nome === produto.nome &&
- item.tamanho === tamanho
- );
-
- if(existente){
-
-  existente.quantidade += 1;
-
- }else{
-
-  carrinho.push({
-   nome:produto.nome,
-   tamanho,
-   valor:Number(produto.valor),
-   quantidade:1
-  });
-
- }
-
- atualizarCarrinho();
+body{
+background:#0f0f0f;
+color:#fff;
+padding-bottom:160px;
+overflow-x:hidden;
 }
 
-function atualizarCarrinho(){
-
- const div =
- document.getElementById(
- 'itensCarrinho'
- );
-
- if(carrinho.length===0){
-
-  div.innerHTML =
-  'Carrinho vazio';
-
-  return;
- }
-
- let total = 0;
- let html = '';
-
- carrinho.forEach(
- (item,index)=>{
-
-  const subtotal =
-  item.valor *
-  item.quantidade;
-
-  total += subtotal;
-
-  html += `
-  <div style="
-  margin-bottom:10px;
-  border-bottom:1px solid #333;
-  padding-bottom:10px;
-  ">
-
-  <b>${item.nome}</b><br>
-
-  📏 Tam:
-  ${item.tamanho}<br>
-
-  🔢 Qtd:
-  ${item.quantidade}<br>
-
-  💰 R$
-  ${subtotal.toFixed(2)}
-
-  </div>
-  `;
- });
-
- html += `
- <br>
- <b>
- Total:
- R$ ${total.toFixed(2)}
- </b>
- `;
-
- div.innerHTML = html;
-}
-  
-window.finalizarPedido =
-function(){
-
- if(carrinho.length===0){
-
-  alert('Carrinho vazio');
-  return;
- }
-
- let numeroPedido =
- Math.floor(
- 10000 +
- Math.random() * 90000
- );
-
- let msg =
-`🛒 *NOVO PEDIDO - CASTELHANO SPORT'S*%0A%0A`;
-
- msg +=
-`🆔 Pedido: #${numeroPedido}%0A`;
-
- msg +=
-`👤 Cliente: ${
-usuario?.nome || 'Cliente'
-}%0A`;
-
- msg +=
-`📧 Email: ${
-usuario?.email || 'Não informado'
-}%0A%0A`;
-
- msg +=
-`📦 *PRODUTOS:*%0A%0A`;
-
- let total = 0;
- let totalItens = 0;
-
- carrinho.forEach(
- (item,index)=>{
-
- const subtotal =
- item.valor *
- item.quantidade;
-
- total += subtotal;
- totalItens +=
- item.quantidade;
-
- msg +=
-`${index+1}️⃣ ${item.nome}%0A`;
-
- msg +=
-`📏 Tamanho: ${
-item.tamanho
-}%0A`;
-
- msg +=
-`🔢 Quantidade: ${
-item.quantidade
-}%0A`;
-
- msg +=
-`💰 Subtotal: R$ ${
-subtotal.toFixed(2)
-}%0A%0A`;
-
- });
-
- msg +=
-`🛍️ Itens: ${
-totalItens
-}%0A`;
-
- msg +=
-`💵 *TOTAL:* R$ ${
-total.toFixed(2)
-}%0A%0A`;
-
- msg +=
-`💳 Pagamento:%0A`;
- msg +=
-`PIX ou boleto a combinar`;
-
- window.open(
-`https://wa.me/5547991938901?text=${msg}`,
-'_blank'
- );
+/* HEADER */
+.header{
+background:#111;
+padding:15px;
+border-bottom:2px solid #ea580c;
+position:sticky;
+top:0;
+z-index:999;
+text-align:center;
 }
 
-onAuthStateChanged(
- auth,
- user=>{
-
- if(user){
-
-  usuario = {
-   uid:user.uid,
-   nome:
-user.displayName ||
-'Cliente',
-   email:user.email,
-   foto:user.photoURL
-  };
-
-  // FOTO PERFIL TOPO
-  document
-  .getElementById(
-  'fotoUsuario'
-  )
-  .src =
-  user.photoURL ||
-  'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-
-  // FOTO MENU
-  document
-  .getElementById(
-  'fotoPerfil'
-  )
-  .src =
-  user.photoURL ||
-  'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-
-  // NOME
-  document
-  .getElementById(
-  'nomeUsuarioPerfil'
-  )
-  .innerText =
-  user.displayName ||
-  'Cliente';
-
-  // EMAIL
-  document
-  .getElementById(
-  'emailUsuarioPerfil'
-  )
-  .innerText =
-  user.email;
-
-  // esconder login
-  document
-  .getElementById(
-  'loginTela'
-  )
-  .style.display='none';
-
-  // mostrar catálogo
-  document
-  .getElementById(
-  'site'
-  )
-  .style.display='block';
-
-  carregar();
-  resetarTempo();
-
- }else{
-
-  document
-  .getElementById(
-  'loginTela'
-  )
-  .style.display='flex';
-
-  document
-  .getElementById(
-  'site'
-  )
-  .style.display='none';
-
- }
-
-});
-  
-  window.abrirCadastro = function(){
-
-  document
-  .getElementById(
-    'modalCadastro'
-  )
-  .style.display='flex';
-
+.logo{
+font-size:24px;
+font-weight:bold;
+color:#ea580c;
 }
 
-window.fecharCadastro = function(){
-
-  document
-  .getElementById(
-    'modalCadastro'
-  )
-  .style.display='none';
-
-}
- window.onclick = function(e){
-
- if(
-  e.target.id ===
-  'modalCadastro'
- ){
-  fecharCadastro();
- }
-
- if(
-  e.target.id ===
-  'perfilModal'
- ){
-
-  document
-  .getElementById(
-   'perfilModal'
-  )
-  .style.display='none';
-
- }
-
-}
-  
-  window.criarConta =
-async function(){
-
- try{
-
-  const nome =
-  document
-  .getElementById('novoNome')
-  .value.trim();
-
-  const nomeUsuario =
-  document
-  .getElementById('novoUsuario')
-  .value.trim();
-
-  const email =
-  document
-  .getElementById('novoEmail')
-  .value.trim();
-
-  const senha =
-  document
-  .getElementById('novaSenha')
-  .value;
-
-  if(
-   !nome ||
-   !nomeUsuario ||
-   !email ||
-   !senha
-  ){
-   alert(
-    'Preencha todos os campos'
-   );
-   return;
-  }
-
-  const cred =
-  await createUserWithEmailAndPassword(
-   auth,
-   email,
-   senha
-  );
-
-  await updateProfile(
-   cred.user,
-   {
-    displayName:nome
-   }
-  );
-
-  await setDoc(
-   doc(
-    db,
-    'usuarios',
-    cred.user.uid
-   ),
-   {
-    uid:cred.user.uid,
-    nome:nome,
-    usuario:nomeUsuario,
-    email:email,
-    criadoEm:new Date()
-   }
-  );
-
-  alert(
-   'Conta criada com sucesso!'
-  );
-
-  fecharCadastro();
-
- }catch(e){
-
-  console.log(e);
-
-  if(
-   e.code ===
-   'auth/email-already-in-use'
-  ){
-   alert(
-    'Email já cadastrado'
-   );
-   return;
-  }
-
-  alert(
-   'Erro ao criar conta'
-  );
-
- }
-  
-}
-  
-window.loginUsuario =
-async function(){
-
- try{
-
-  const usuario =
-  document
-  .getElementById('loginUser')
-  .value
-  .trim();
-
-  const senha =
-  document
-  .getElementById('loginSenha')
-  .value;
-
-  if(!usuario || !senha){
-
-   alert(
-    'Preencha usuário e senha'
-   );
-
-   return;
-  }
-
-  const usuariosRef =
-  collection(
-   db,
-   'usuarios'
-  );
-
-  const q =
-  query(
-   usuariosRef,
-   where(
-    'usuario',
-    '==',
-    usuario
-   )
-  );
-
-  const resultado =
-  await getDocs(q);
-
-  if(resultado.empty){
-
-   alert(
-    'Usuário não encontrado'
-   );
-
-   return;
-  }
-
-  const dados =
-  resultado.docs[0]
-  .data();
-
-  await signInWithEmailAndPassword(
-   auth,
-   dados.email,
-   senha
-  );
-
- }catch(e){
-
-  console.log(e);
-
-  alert(
-   'Usuário ou senha inválidos'
-  );
-
- }
-
-}
-  document
-.getElementById('loginSenha')
-.addEventListener(
-'keydown',
-function(e){
-
- if(e.key === 'Enter'){
-  loginUsuario();
- }
-
-});
-  // =====================
-// TIMER DE INATIVIDADE
-// =====================
-
-let tempoInatividade;
-
-// 2min30s = 150000
-const LIMITE = 150000;
-
-function resetarTempo(){
-
- clearTimeout(
-  tempoInatividade
- );
-
- tempoInatividade =
- setTimeout(
-  logoutAutomatico,
-  LIMITE
- );
-
+.sub{
+font-size:12px;
+color:#aaa;
+margin-top:3px;
 }
 
-async function logoutAutomatico(){
-
- try{
-
-  await signOut(auth);
-
-  alert(
-   'Sessão encerrada por inatividade'
-  );
-
- }catch(e){
-
-  console.log(e);
-
- }
-
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:8px;
+padding:8px;
 }
 
-// detectar atividade do usuário
-[
-'click',
-'mousemove',
-'keydown',
-'scroll',
-'touchstart'
-]
-.forEach(evento=>{
-
- document
- .addEventListener(
-  evento,
-  resetarTempo
- );
-
-});
-
-// iniciar timer
-resetarTempo();
-
-  window.abrirPerfil =
-function(){
-
- document
- .getElementById(
-  'perfilModal'
- )
- .style.display='flex';
-
+.card{
+background:#111;
+border-radius:12px;
+overflow:hidden;
+border:1px solid #222;
+padding:6px;
 }
 
-window.logout =
-async function(){
+.card img{
+width:100%;
+height:130px;
+object-fit:contain;
+background:#181818;
+border-radius:10px;
+padding:5px;
+}
 
- await signOut(auth);
+.info{
+padding:6px 2px;
+}
+
+.nome{
+font-size:14px;
+font-weight:bold;
+margin-bottom:5px;
+
+display:-webkit-box;
+-webkit-line-clamp:2;
+-webkit-box-orient:vertical;
+overflow:hidden;
+}
+
+.preco{
+color:#22c55e;
+font-size:22px;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+.estoque-item{
+background:#1f1f1f;
+padding:5px 8px;
+border-radius:8px;
+font-size:12px;
+margin-bottom:5px;
+}
+
+select{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #333;
+background:#1a1a1a;
+color:#fff;
+font-size:13px;
+margin-top:5px;
+}
+
+button{
+width:100%;
+padding:11px;
+border:none;
+border-radius:10px;
+background:#ea580c;
+color:white;
+font-weight:bold;
+margin-top:8px;
+cursor:pointer;
+font-size:13px;
+}
+
+/* CARRINHO */
+.carrinho{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#111;
+border-top:2px solid #ea580c;
+padding:12px;
+z-index:999;
+max-height:250px;
+overflow:auto;
+}
+
+.finalizar{
+background:#16a34a;
+margin-top:10px;
+}
+
+@media(min-width:768px){
+
+.grid{
+grid-template-columns:
+repeat(auto-fill,minmax(220px,1fr));
+}
+
+.card img{
+height:220px;
+}
 
 }
-</script>
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+
+<div class="logo">
+Castelhano Sport's
+</div>
+
+<div class="sub">
+Represente seu time com estilo!
+</div>
 
 </div>
 
+<!-- PRODUTOS -->
+<div class="grid" id="produtos"></div>
+
+<!-- CARRINHO -->
+<div class="carrinho">
+
+<div id="itensCarrinho">
+Carrinho vazio
+</div>
+
+<button
+class="finalizar"
+onclick="finalizarPedido()">
+
+FINALIZAR PEDIDO
+
+</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+/* FIREBASE */
+
+const firebaseConfig = {
+
+apiKey:'<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Castelhano Sport's</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f0f0f;
+color:#fff;
+padding-bottom:160px;
+overflow-x:hidden;
+}
+
+/* HEADER */
+.header{
+background:#111;
+padding:15px;
+border-bottom:2px solid #ea580c;
+position:sticky;
+top:0;
+z-index:999;
+text-align:center;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+color:#ea580c;
+}
+
+.sub{
+font-size:12px;
+color:#aaa;
+margin-top:3px;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:8px;
+padding:8px;
+}
+
+.card{
+background:#111;
+border-radius:12px;
+overflow:hidden;
+border:1px solid #222;
+padding:6px;
+}
+
+.card img{
+width:100%;
+height:130px;
+object-fit:contain;
+background:#181818;
+border-radius:10px;
+padding:5px;
+}
+
+.info{
+padding:6px 2px;
+}
+
+.nome{
+font-size:14px;
+font-weight:bold;
+margin-bottom:5px;
+
+display:-webkit-box;
+-webkit-line-clamp:2;
+-webkit-box-orient:vertical;
+overflow:hidden;
+}
+
+.preco{
+color:#22c55e;
+font-size:22px;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+.estoque-item{
+background:#1f1f1f;
+padding:5px 8px;
+border-radius:8px;
+font-size:12px;
+margin-bottom:5px;
+}
+
+select{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #333;
+background:#1a1a1a;
+color:#fff;
+font-size:13px;
+margin-top:5px;
+}
+
+button{
+width:100%;
+padding:11px;
+border:none;
+border-radius:10px;
+background:#ea580c;
+color:white;
+font-weight:bold;
+margin-top:8px;
+cursor:pointer;
+font-size:13px;
+}
+
+/* CARRINHO */
+.carrinho{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#111;
+border-top:2px solid #ea580c;
+padding:12px;
+z-index:999;
+max-height:250px;
+overflow:auto;
+}
+
+.finalizar{
+background:#16a34a;
+margin-top:10px;
+}
+
+@media(min-width:768px){
+
+.grid{
+grid-template-columns:
+repeat(auto-fill,minmax(220px,1fr));
+}
+
+.card img{
+height:220px;
+}
+
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+
+<div class="logo">
+Castelhano Sport's
+</div>
+
+<div class="sub">
+Represente seu time com estilo!
+</div>
+
+</div>
+
+<!-- PRODUTOS -->
+<div class="grid" id="produtos"></div>
+
+<!-- CARRINHO -->
+<div class="carrinho">
+
+<div id="itensCarrinho">
+Carrinho vazio
+</div>
+
+<button
+class="finalizar"
+onclick="finalizarPedido()">
+
+FINALIZAR PEDIDO
+
+</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+/* FIREBASE */
+
+const firebaseConfig = {
+
+apiKey:'SUA_API_KEY',
+
+authDomain:'SEU_DOMINIO',
+
+projectId:'SEU_PROJECT_ID',
+
+storageBucket:'SEU_STORAGE',
+
+messagingSenderId:'SEU_ID',
+
+appId:'SEU_APP_ID'
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* VARIÁVEIS */
+
+let produtos = [];
+let carrinho = [];
+
+/* CARREGAR PRODUTOS */
+
+async function carregar(){
+
+const snap =
+await getDocs(
+collection(db,'produtos')
+);
+
+produtos=[];
+
+snap.forEach(doc=>{
+
+produtos.push({
+id:doc.id,
+...doc.data()
+});
+
+});
+
+render();
+
+}
+
+carregar();
+
+/* RENDER */
+
+function render(){
+
+const lista =
+document.getElementById(
+'produtos'
+);
+
+lista.innerHTML='';
+
+produtos.forEach(produto=>{
+
+let opcoes='';
+let disponivel=false;
+let estoqueTexto='';
+
+for(let t in produto.tamanhos){
+
+let d =
+produto.tamanhos[t];
+
+let restante =
+d.total - d.vendido;
+
+estoqueTexto += `
+<div class="estoque-item">
+${t}: ${restante} disponível
+</div>
+`;
+
+if(restante > 0){
+
+disponivel=true;
+
+opcoes += `
+<option value="${t}">
+${t} (${restante})
+</option>
+`;
+
+}
+
+}
+
+lista.innerHTML += `
+<div class="card">
+
+<img src="${
+produto.imagens?.[0]
+|| produto.img
+}">
+
+<div class="info">
+
+<div class="nome">
+${produto.nome}
+</div>
+
+<div class="preco">
+R$ ${produto.valor}
+</div>
+
+${estoqueTexto}
+
+${
+disponivel
+?
+`
+<select id="tam-${produto.id}">
+${opcoes}
+</select>
+
+<button
+onclick="addCarrinho('${produto.id}')">
+
+ADICIONAR AO CARRINHO
+
+</button>
+`
+:
+`
+<button>
+ESGOTADO
+</button>
+`
+}
+
+</div>
+</div>
+`;
+
+});
+
+}
+
+/* ADD CARRINHO */
+
+window.addCarrinho =
+function(id){
+
+const produto =
+produtos.find(
+p=>p.id===id
+);
+
+const tamanho =
+document.getElementById(
+`tam-${id}`
+).value;
+
+const existente =
+carrinho.find(
+item=>
+item.nome === produto.nome &&
+item.tamanho === tamanho
+);
+
+if(existente){
+
+existente.quantidade++;
+
+}else{
+
+carrinho.push({
+
+nome:produto.nome,
+tamanho,
+valor:Number(produto.valor),
+quantidade:1
+
+});
+
+}
+
+atualizarCarrinho();
+
+}
+
+/* ATUALIZAR CARRINHO */
+
+function atualizarCarrinho(){
+
+const div =
+document.getElementById(
+'itensCarrinho'
+);
+
+if(carrinho.length===0){
+
+div.innerHTML =
+'Carrinho vazio';
+
+return;
+
+}
+
+let total = 0;
+let html = '';
+
+carrinho.forEach(item=>{
+
+const subtotal =
+item.valor *
+item.quantidade;
+
+total += subtotal;
+
+html += `
+<div style="
+margin-bottom:10px;
+border-bottom:1px solid #333;
+padding-bottom:10px;
+">
+
+<b>${item.nome}</b><br>
+
+📏 Tam:
+${item.tamanho}<br>
+
+🔢 Qtd:
+${item.quantidade}<br>
+
+💰 R$
+${subtotal.toFixed(2)}
+
+</div>
+`;
+
+});
+
+html += `
+<b>
+TOTAL:
+R$ ${total.toFixed(2)}
+</b>
+`;
+
+div.innerHTML =
+html;
+
+}
+
+/* WHATSAPP */
+
+window.finalizarPedido =
+function(){
+
+if(carrinho.length===0){
+
+alert(
+'Carrinho vazio'
+);
+
+return;
+}
+
+let numeroPedido =
+Math.floor(
+10000 +
+Math.random()*90000
+);
+
+let total = 0;
+
+let msg =
+`🛒 *NOVO PEDIDO - CASTELHANO SPORT'S*%0A%0A`;
+
+msg +=
+`🆔 Pedido: #${numeroPedido}%0A%0A`;
+
+msg +=
+`📦 *PRODUTOS:*%0A%0A`;
+
+carrinho.forEach(
+(item,index)=>{
+
+const subtotal =
+item.valor *
+item.quantidade;
+
+total += subtotal;
+
+msg +=
+`${index+1}️⃣ ${item.nome}%0A`;
+
+msg +=
+`📏 Tam: ${item.tamanho}%0A`;
+
+msg +=
+`🔢 Quantidade: ${item.quantidade}%0A`;
+
+msg +=
+`💰 R$ ${subtotal.toFixed(2)}%0A%0A`;
+
+});
+
+msg +=
+`💵 *TOTAL:* R$ ${total.toFixed(2)}%0A%0A`;
+
+msg +=
+`💳 Pagamento:%0APIX ou boleto a combinar`;
+
+window.open(
+`https://wa.me/5547991938901?text=${msg}`,
+'_blank'
+);
+
+}
+
+</script>
+
 </body>
-  
+</html>',
+
+authDomain:'SEU_DOMINIO',
+
+projectId:'SEU_PROJECT_ID',
+
+storageBucket:'SEU_STORAGE',
+
+messagingSenderId:'SEU_ID',
+
+appId:'SEU_APP_ID'
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* VARIÁVEIS */
+
+let produtos = [];
+let carrinho = [];
+
+/* CARREGAR PRODUTOS */
+
+async function carregar(){
+
+const snap =
+await getDocs(
+collection(db,'produtos')
+);
+
+produtos=[];
+
+snap.forEach(doc=>{
+
+produtos.push({
+id:doc.id,
+...doc.data()
+});
+
+});
+
+render();
+
+}
+
+carregar();
+
+/* RENDER */
+
+function render(){
+
+const lista =
+document.getElementById(
+'produtos'
+);
+
+lista.innerHTML='';
+
+produtos.forEach(produto=>{
+
+let opcoes='';
+let disponivel=false;
+let estoqueTexto='';
+
+for(let t in produto.tamanhos){
+
+let d =
+produto.tamanhos[t];
+
+let restante =
+d.total - d.vendido;
+
+estoqueTexto += `
+<div class="estoque-item">
+${t}: ${restante} disponível
+</div>
+`;
+
+if(restante > 0){
+
+disponivel=true;
+
+opcoes += `
+<option value="${t}">
+${t} (${restante})
+</option>
+`;
+
+}
+
+}
+
+lista.innerHTML += `
+<div class="card">
+
+<img src="${
+produto.imagens?.[0]
+|| produto.img
+}">
+
+<div class="info">
+
+<div class="nome">
+${produto.nome}
+</div>
+
+<div class="preco">
+R$ ${produto.valor}
+</div>
+
+${estoqueTexto}
+
+${
+disponivel
+?
+`
+<select id="tam-${produto.id}">
+${opcoes}
+</select>
+
+<button
+onclick="addCarrinho('${produto.id}')">
+
+ADICIONAR AO CARRINHO
+
+</button>
+`
+:
+`
+<button>
+ESGOTADO
+</button>
+`
+}
+
+</div>
+</div>
+`;
+
+});
+
+}
+
+/* ADD CARRINHO */
+
+window.addCarrinho =
+function(id){
+
+const produto =
+produtos.find(
+p=>p.id===id
+);
+
+const tamanho =
+document.getElementById(
+`tam-${id}`
+).value;
+
+const existente =
+carrinho.find(
+item=>
+item.nome === produto.nome &&
+item.tamanho === tamanho
+);
+
+if(existente){
+
+existente.quantidade++;
+
+}else{
+
+carrinho.push({
+
+nome:produto.nome,
+tamanho,
+valor:Number(produto.valor),
+quantidade:1
+
+});
+
+}
+
+atualizarCarrinho();
+
+}
+
+/* ATUALIZAR CARRINHO */
+
+function atualizarCarrinho(){
+
+const div =
+document.getElementById(
+'itensCarrinho'
+);
+
+if(carrinho.length===0){
+
+div.innerHTML =
+'Carrinho vazio';
+
+return;
+
+}
+
+let total = 0;
+let html = '';
+
+carrinho.forEach(item=>{
+
+const subtotal =
+item.valor *
+item.quantidade;
+
+total += subtotal;
+
+html += `
+<div style="
+margin-bottom:10px;
+border-bottom:1px solid #333;
+padding-bottom:10px;
+">
+
+<b>${item.nome}</b><br>
+
+📏 Tam:
+${item.tamanho}<br>
+
+🔢 Qtd:
+${item.quantidade}<br>
+
+💰 R$
+${subtotal.toFixed(2)}
+
+</div>
+`;
+
+});
+
+html += `
+<b>
+TOTAL:
+R$ ${total.toFixed(2)}
+</b>
+`;
+
+div.innerHTML =
+html;
+
+}
+
+/* WHATSAPP */
+
+window.finalizarPedido =
+function(){
+
+if(carrinho.length===0){
+
+alert(
+'Carrinho vazio'
+);
+
+return;
+}
+
+let numeroPedido =
+Math.floor(
+10000 +
+Math.random()*90000
+);
+
+let total = 0;
+
+let msg =
+`🛒 *NOVO PEDIDO - CASTELHANO SPORT'S*%0A%0A`;
+
+msg +=
+`🆔 Pedido: #${numeroPedido}%0A%0A`;
+
+msg +=
+`📦 *PRODUTOS:*%0A%0A`;
+
+carrinho.forEach(
+(item,index)=>{
+
+const subtotal =
+item.valor *
+item.quantidade;
+
+total += subtotal;
+
+msg +=
+`${index+1}️⃣ ${item.nome}%0A`;
+
+msg +=
+`📏 Tam: ${item.tamanho}%0A`;
+
+msg +=
+`🔢 Quantidade: ${item.quantidade}%0A`;
+
+msg +=
+`💰 R$ ${subtotal.toFixed(2)}%0A%0A`;
+
+});
+
+msg +=
+`💵 *TOTAL:* R$ ${total.toFixed(2)}%0A%0A`;
+
+msg +=
+`💳 Pagamento:%0APIX ou boleto a combinar`;
+
+window.open(
+`https://wa.me/5547991938901?text=${msg}`,
+'_blank'
+);
+
+}
+
+</script>
+
+</body>
+</html>',
+
+authDomain:'SEU_DOMINIO',
+
+projectId:'SEU_PROJECT_ID',
+
+storageBucket:'SEU_STORAGE',
+
+messagingSenderId:'SEU_ID',
+
+appId:'SEU_APP_ID'
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* VARIÁVEIS */
+
+let produtos = [];
+let carrinho = [];
+
+/* CARREGAR PRODUTOS */
+
+async function carregar(){
+
+const snap =
+await getDocs(
+collection(db,'produtos')
+);
+
+produtos=[];
+
+snap.forEach(doc=>{
+
+produtos.push({
+id:doc.id,
+...doc.data()
+});
+
+});
+
+render();
+
+}
+
+carregar();
+
+/* RENDER */
+
+function render(){
+
+const lista =
+document.getElementById(
+'produtos'
+);
+
+lista.innerHTML='';
+
+produtos.forEach(produto=>{
+
+let opcoes='';
+let disponivel=false;
+let estoqueTexto='';
+
+for(let t in produto.tamanhos){
+
+let d =
+produto.tamanhos[t];
+
+let restante =
+d.total - d.vendido;
+
+estoqueTexto += `
+<div class="estoque-item">
+${t}: ${restante} disponível
+</div>
+`;
+
+if(restante > 0){
+
+disponivel=true;
+
+opcoes += `
+<option value="${t}">
+${t} (${restante})
+</option>
+`;
+
+}
+
+}
+
+lista.innerHTML += `
+<div class="card">
+
+<img src="${
+produto.imagens?.[0]
+|| produto.img
+}">
+
+<div class="info">
+
+<div class="nome">
+${produto.nome}
+</div>
+
+<div class="preco">
+R$ ${produto.valor}
+</div>
+
+${estoqueTexto}
+
+${
+disponivel
+?
+`
+<select id="tam-${produto.id}">
+${opcoes}
+</select>
+
+<button
+onclick="addCarrinho('${produto.id}')">
+
+ADICIONAR AO CARRINHO
+
+</button>
+`
+:
+`
+<button>
+ESGOTADO
+</button>
+`
+}
+
+</div>
+</div>
+`;
+
+});
+
+}
+
+/* ADD CARRINHO */
+
+window.addCarrinho =
+function(id){
+
+const produto =
+produtos.find(
+p=>p.id===id
+);
+
+const tamanho =
+document.getElementById(
+`tam-${id}`
+).value;
+
+const existente =
+carrinho.find(
+item=>
+item.nome === produto.nome &&
+item.tamanho === tamanho
+);
+
+if(existente){
+
+existente.quantidade++;
+
+}else{
+
+carrinho.push({
+
+nome:produto.nome,
+tamanho,
+valor:Number(produto.valor),
+quantidade:1
+
+});
+
+}
+
+atualizarCarrinho();
+
+}
+
+/* ATUALIZAR CARRINHO */
+
+function atualizarCarrinho(){
+
+const div =
+document.getElementById(
+'itensCarrinho'
+);
+
+if(carrinho.length===0){
+
+div.innerHTML =
+'Carrinho vazio';
+
+return;
+
+}
+
+let total = 0;
+let html = '';
+
+carrinho.forEach(item=>{
+
+const subtotal =
+item.valor *
+item.quantidade;
+
+total += subtotal;
+
+html += `
+<div style="
+margin-bottom:10px;
+border-bottom:1px solid #333;
+padding-bottom:10px;
+">
+
+<b>${item.nome}</b><br>
+
+📏 Tam:
+${item.tamanho}<br>
+
+🔢 Qtd:
+${item.quantidade}<br>
+
+💰 R$
+${subtotal.toFixed(2)}
+
+</div>
+`;
+
+});
+
+html += `
+<b>
+TOTAL:
+R$ ${total.toFixed(2)}
+</b>
+`;
+
+div.innerHTML =
+html;
+
+}
+
+/* WHATSAPP */
+
+window.finalizarPedido =
+function(){
+
+if(carrinho.length===0){
+
+alert(
+'Carrinho vazio'
+);
+
+return;
+}
+
+let numeroPedido =
+Math.floor(
+10000 +
+Math.random()*90000
+);
+
+let total = 0;
+
+let msg =
+`🛒 *NOVO PEDIDO - CASTELHANO SPORT'S*%0A%0A`;
+
+msg +=
+`🆔 Pedido: #${numeroPedido}%0A%0A`;
+
+msg +=
+`📦 *PRODUTOS:*%0A%0A`;
+
+carrinho.forEach(
+(item,index)=>{
+
+const subtotal =
+item.valor *
+item.quantidade;
+
+total += subtotal;
+
+msg +=
+`${index+1}️⃣ ${item.nome}%0A`;
+
+msg +=
+`📏 Tam: ${item.tamanho}%0A`;
+
+msg +=
+`🔢 Quantidade: ${item.quantidade}%0A`;
+
+msg +=
+`💰 R$ ${subtotal.toFixed(2)}%0A%0A`;
+
+});
+
+msg +=
+`💵 *TOTAL:* R$ ${total.toFixed(2)}%0A%0A`;
+
+msg +=
+`💳 Pagamento:%0APIX ou boleto a combinar`;
+
+window.open(
+`https://wa.me/5547991938901?text=${msg}`,
+'_blank'
+);
+
+}
+
+</script>
+
+</body>
 </html>
