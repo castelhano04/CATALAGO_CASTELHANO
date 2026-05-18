@@ -636,7 +636,31 @@ const auth = getAuth(app);
  auth,
  browserLocalPersistence
 );
-const provider = new GoogleAuthProvider();
+const provider =
+new GoogleAuthProvider();
+
+window.loginGoogle =
+async function(){
+
+ try{
+
+  await signInWithPopup(
+   auth,
+   provider
+  );
+
+ }catch(e){
+
+  console.log(e);
+
+  alert(
+   'Erro ao fazer login'
+  );
+
+ }
+
+}
+  
 
 let usuario = null;
 
