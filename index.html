@@ -1059,6 +1059,7 @@ window.fecharCadastro = function(){
  }
 
 }
+  
   window.criarConta =
 async function(){
 
@@ -1150,7 +1151,7 @@ async function(){
   );
 
  }
-
+  
 }
   
 window.loginUsuario =
@@ -1160,26 +1161,21 @@ async function(){
 
   const usuario =
   document
-  .getElementById(
-   'loginUser'
-  )
+  .getElementById('loginUser')
   .value
   .trim();
 
   const senha =
   document
-  .getElementById(
-   'loginSenha'
-  )
+  .getElementById('loginSenha')
   .value;
 
-  if(
-   !usuario ||
-   !senha
-  ){
+  if(!usuario || !senha){
+
    alert(
     'Preencha usuário e senha'
    );
+
    return;
   }
 
@@ -1233,9 +1229,7 @@ async function(){
 
 }
   document
-.getElementById(
-'loginSenha'
-)
+.getElementById('loginSenha')
 .addEventListener(
 'keydown',
 function(e){
@@ -1245,58 +1239,6 @@ function(e){
  }
 
 });
-  
-  // procurar usuário no Firestore
-  const usuariosRef =
-  collection(
-   db,
-   'usuarios'
-  );
-
-  const q =
-  query(
-   usuariosRef,
-   where(
-    'usuario',
-    '==',
-    usuario
-   )
-  );
-
-  const resultado =
-  await getDocs(q);
-
-  if(resultado.empty){
-
-   alert(
-    'Usuário não encontrado'
-   );
-
-   return;
-  }
-
-  const dados =
-  resultado.docs[0]
-  .data();
-
-  // login pelo email salvo
-  await signInWithEmailAndPassword(
-   auth,
-   dados.email,
-   senha
-  );
-
- }catch(e){
-
-  console.log(e);
-
-  alert(
-   'Usuário ou senha inválidos'
-  );
-
- }
-
-}
   // =====================
 // TIMER DE INATIVIDADE
 // =====================
