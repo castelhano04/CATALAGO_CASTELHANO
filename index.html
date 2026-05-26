@@ -356,6 +356,21 @@ background:#ea580c;
 background:#ea580c;
 box-shadow:0 0 10px rgba(234,88,12,.35);
 }
+  .filtros{
+  padding:12px;
+  background:#111;
+  border-bottom:1px solid #222;
+}
+
+#filtroCategoria{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #333;
+  background:#1b1b1b;
+  color:white;
+  font-size:15px;
+}
   
 </style>
 </head>
@@ -390,6 +405,20 @@ Seleção BR
 
 </div>
   
+  <div class="filtros">
+
+<select id="filtroCategoria" onchange="filtrarProdutos()">
+  <option value="Todos">Todos</option>
+  <option value="Europeias">Camisas Europeias</option>
+  <option value="Selecoes">Seleções</option>
+  <option value="Times BR">Times BR</option>
+  <option value="Selecao Brasileira">
+    Seleção Brasileira
+  </option>
+</select>
+
+</div>
+  
 <div class="grid" id="produtos"></div>
 
 <script type="module">
@@ -417,6 +446,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let produtos = [];
+let filtroAtual = 'Todos';
 let carrinho = [];
 
 async function carregar(){
@@ -445,7 +475,17 @@ render();
 }
 
 carregar();
+  
+window.filtrarProdutos = function(){
 
+  filtroAtual =
+  document.getElementById(
+    'filtroCategoria'
+  ).value;
+
+  render();
+}
+  
 function render(){
 
 const lista =
@@ -463,7 +503,14 @@ return true;
 return produto.categoria === filtroAtual;
 
 })
-.forEach(produto=>{
+produtos.forEach(produto=>{
+
+if(
+  filtroAtual !== 'Todos' &&
+  produto.categoria !== filtroAtual
+){
+  return;
+}
 
 let opcoes = '';
 let estoqueTexto = '';
