@@ -407,7 +407,6 @@ Seleção BR
   
   <div class="filtros">
 
-<select id="filtroCategoria" onchange="filtrarProdutos()">
   <option value="Todos">Todos</option>
   <option value="Europeias">Camisas Europeias</option>
   <option value="Selecoes">Seleções</option>
@@ -464,7 +463,9 @@ id:doc.id,
 });
 });
   
-let filtroAtual = 'Todos';
+  render();
+
+}
   
   window.filtrar = function(categoria){
 
@@ -473,8 +474,8 @@ filtroAtual = categoria;
 render();
 
 }
-
-carregar();
+  
+  carregar();
   
 window.filtrarProdutos = function(){
 
@@ -494,6 +495,7 @@ document.getElementById('produtos');
 lista.innerHTML='';
 
 produtos
+produtos
 .filter(produto => {
 
 if(filtroAtual === 'Todos'){
@@ -503,7 +505,7 @@ return true;
 return produto.categoria === filtroAtual;
 
 })
-produtos.forEach(produto=>{
+.forEach(produto=>{
 
 if(
   filtroAtual !== 'Todos' &&
