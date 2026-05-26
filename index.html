@@ -7,7 +7,6 @@
 
 <style>
 *{
-*{
 margin:0;
 padding:0;
 box-sizing:border-box;
@@ -59,17 +58,6 @@ border:1px solid #222;
 border-radius:14px;
 overflow:hidden;
 padding:8px;
-}
-
-/* IMAGEM MENOR */
-.card img{
-width:100%;
-height:110px;
-object-fit:contain;
-background:#181818;
-border-radius:10px;
-padding:4px;
-margin-bottom:6px;
 }
 
 /* INFORMAÇÕES */
@@ -276,6 +264,61 @@ color:#fff;
 font-weight:bold;
 cursor:pointer;
 }
+ .foto-box{
+position:relative;
+width:100%;
+height:150px;
+background:#141414;
+border-radius:12px;
+overflow:hidden;
+margin-bottom:8px;
+display:flex;
+align-items:center;
+justify-content:center;
+border:1px solid #222;
+}
+
+.produto-img{
+width:100%;
+height:100%;
+object-fit:contain;
+padding:8px;
+transition:.2s;
+}
+
+.foto-btn{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:32px;
+height:32px;
+border:none;
+border-radius:50%;
+background:rgba(0,0,0,.55);
+backdrop-filter:blur(6px);
+color:white;
+font-size:18px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:.2s;
+z-index:10;
+}
+
+.foto-btn:hover{
+background:#ea580c;
+transform:
+translateY(-50%) scale(1.08);
+}
+
+.foto-prev{
+left:6px;
+}
+
+.foto-next{
+right:6px;
+}
   
 </style>
 </head>
@@ -380,15 +423,44 @@ ${t} (${restante})
 }
 }
 
-const imagem =
-produto.imagens?.[0] ||
-produto.img ||
-'https://via.placeholder.com/300x300?text=Sem+Imagem';
-
+const imagens =
+produto.imagens?.length
+? produto.imagens
+: (
+produto.img
+? [produto.img]
+: ['https://via.placeholder.com/300x300?text=Sem+Imagem']
+);
+  
 lista.innerHTML += `
 <div class="card">
 
-<img src="${imagem}">
+<div class="foto-box">
+
+<img
+id="foto-${produto.id}"
+src="${imagens[0]}"
+class="produto-img">
+
+${
+imagens.length > 1
+? `
+<button
+class="foto-btn foto-prev"
+onclick="trocarFoto('${produto.id}',-1)">
+❮
+</button>
+
+<button
+class="foto-btn foto-next"
+onclick="trocarFoto('${produto.id}',1)">
+❯
+</button>
+`
+: ''
+}
+
+</div>
 
 <div class="info">
 
@@ -557,6 +629,44 @@ document
 .getElementById('cartOverlay')
 .classList.remove('active');
 
+}
+window.fotoAtual = {};
+
+window.trocarFoto = function(id,direcao){
+
+const produto =
+produtos.find(p=>p.id===id);
+
+if(!produto) return;
+
+const imagens =
+produto.imagens?.length
+? produto.imagens
+: (
+produto.img
+? [produto.img]
+: ['https://via.placeholder.com/300x300?text=Sem+Imagem']
+);
+
+if(window.fotoAtual[id] == null){
+window.fotoAtual[id] = 0;
+}
+
+window.fotoAtual[id] += direcao;
+
+if(window.fotoAtual[id] < 0){
+window.fotoAtual[id] =
+imagens.length - 1;
+}
+
+if(window.fotoAtual[id] >= imagens.length){
+window.fotoAtual[id] = 0;
+}
+
+document.getElementById(
+`foto-${id}`
+).src =
+imagens[window.fotoAtual[id]];
 }
   
 </script>
