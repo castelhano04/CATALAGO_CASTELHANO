@@ -580,7 +580,10 @@ window.addCarrinho = function(id){
 const produto =
 produtos.find(p => p.id === id);
 
-if(!produto) return;
+if(!produto){
+alert('Produto não encontrado');
+return;
+}
 
 const tamanho =
 document.getElementById(
@@ -592,30 +595,37 @@ alert('Selecione um tamanho');
 return;
 }
 
-const estoqueAtual =
+const dadosTamanho =
 produto.tamanhos[tamanho];
 
-const disponivel =
-estoqueAtual.total -
-estoqueAtual.vendido;
+if(!dadosTamanho){
+alert('Tamanho inválido');
+return;
+}
 
-// vê quanto já existe no carrinho
-const itemExistente =
-carrinho.find(item =>
+// estoque real
+const estoqueDisponivel =
+(dadosTamanho.total || 0) -
+(dadosTamanho.vendido || 0);
+
+// conta quantas desse tamanho já existem no carrinho
+const quantidadeNoCarrinho =
+carrinho
+.filter(item =>
 item.id === id &&
 item.tamanho === tamanho
-);
+)
+.reduce((acc,item)=>
+acc + item.quantidade,0);
 
-const qtdCarrinho =
-itemExistente
-? itemExistente.quantidade
-: 0;
-
-// impede passar do estoque
-if(qtdCarrinho >= disponivel){
+// BLOQUEIA SE PASSAR DO ESTOQUE
+if(
+quantidadeNoCarrinho >=
+estoqueDisponivel
+){
 
 alert(
-`Só existem ${disponivel} unidade(s) do tamanho ${tamanho}`
+`Só existem ${estoqueDisponivel} unidade(s) do tamanho ${tamanho}`
 );
 
 return;
@@ -626,9 +636,15 @@ produto.imagens?.[0]
 || produto.img
 || '';
 
+const itemExistente =
+carrinho.find(item =>
+item.id === id &&
+item.tamanho === tamanho
+);
+
 if(itemExistente){
 
-itemExistente.quantidade++;
+itemExistente.quantidade += 1;
 
 }else{
 
@@ -645,14 +661,8 @@ imagem
 
 atualizarCarrinho();
 
-alert(
-`${produto.nome}
-Tamanho ${tamanho}
-adicionado ao carrinho`
-);
-
 }
-
+  
 function atualizarCarrinho(){
 
 const div =
