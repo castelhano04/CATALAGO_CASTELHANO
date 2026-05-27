@@ -1133,6 +1133,49 @@ document.getElementById(
 ).src =
 imagens[window.fotoAtual[id]];
 }
+  window.qtdProdutoSelecionada = {};
+
+window.mudarQtdProduto = function(tamanho,valor){
+
+if(!window.qtdProdutoSelecionada[tamanho]){
+window.qtdProdutoSelecionada[tamanho] = 0;
+}
+
+const produto =
+window.produtoAtual;
+
+if(!produto) return;
+
+const dados =
+produto.tamanhos[tamanho];
+
+const estoqueDisponivel =
+(dados.total || 0) -
+(dados.vendido || 0);
+
+window.qtdProdutoSelecionada[tamanho] += valor;
+
+if(
+window.qtdProdutoSelecionada[tamanho] < 0
+){
+window.qtdProdutoSelecionada[tamanho] = 0;
+}
+
+if(
+window.qtdProdutoSelecionada[tamanho] >
+estoqueDisponivel
+){
+window.qtdProdutoSelecionada[tamanho] =
+estoqueDisponivel;
+}
+
+document.getElementById(
+`qtd-${tamanho}`
+).innerText =
+window.qtdProdutoSelecionada[tamanho];
+
+}
+  
   window.abrirProduto = function(id){
 
 const produto =
@@ -1151,27 +1194,100 @@ produto.img
 : ['https://via.placeholder.com/500']
 );
 
+const ordemTamanhos = [
+'PP','P','M','G','GG','XG','XGG'
+];
+
 let opcoes = '';
 
-for(let t in produto.tamanhos){
+ordemTamanhos.forEach(t => {
 
-const d =
-produto.tamanhos[t];
+const d = produto.tamanhos[t];
+
+if(!d) return;
 
 const restante =
 (d.total || 0) -
 (d.vendido || 0);
 
-if(restante > 0){
+if(restante <= 0) return;
 
 opcoes += `
-<option value="${t}">
-${t} (${restante} disponíveis)
-</option>
-`;
-}
-}
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#1a1a1a;
+padding:12px;
+border-radius:12px;
+margin-bottom:10px;
+">
 
+<div style="
+font-size:16px;
+font-weight:bold;
+">
+${t}
+<br>
+<span style="
+font-size:13px;
+color:#9ca3af;
+">
+${restante} disponíveis
+</span>
+</div>
+
+<div style="
+display:flex;
+align-items:center;
+gap:10px;
+">
+
+<button
+onclick="alterarQtdProduto('${t}',-1)"
+style="
+width:38px;
+height:38px;
+border-radius:50%;
+background:#dc2626;
+font-size:22px;
+border:none;
+color:white;
+">
+−
+</button>
+
+<div
+id="qtd-${t}"
+style="
+min-width:30px;
+text-align:center;
+font-size:20px;
+font-weight:bold;
+">
+0
+</div>
+
+<button
+onclick="alterarQtdProduto('${t}',1,${restante})"
+style="
+width:38px;
+height:38px;
+border-radius:50%;
+background:#16a34a;
+font-size:22px;
+border:none;
+color:white;
+">
++
+</button>
+
+</div>
+
+</div>
+`;
+});
+    
 document.getElementById(
 'produtoDetalhes'
 ).innerHTML = `
@@ -1271,22 +1387,18 @@ Categoria:
 ${produto.categoria || 'Não informada'}
 </div>
 
-<select
-id="tamProduto"
-style="
-width:100%;
-height:48px;
-margin-top:20px;
-border-radius:12px;
-background:#1a1a1a;
-color:white;
-border:1px solid #333;
-padding:0 10px;
+<div style="margin-top:20px">
+
+<h3 style="
+margin-bottom:12px;
+font-size:18px;
 ">
+Escolha os tamanhos
+</h3>
 
 ${opcoes}
 
-</select>
+</div>
 
 <button
 onclick="addCarrinhoProduto('${produto.id}')"
@@ -1359,10 +1471,21 @@ produtos.find(
 p => p.id === id
 );
 
-const tamanho =
-document.getElementById(
-'tamProduto'
-).value;
+if(!produto) return;
+
+let adicionou = false;
+
+for(
+let tamanho in
+window.qtdProdutoSelecionada
+){
+
+const qtd =
+window.qtdProdutoSelecionada[
+tamanho
+];
+
+if(qtd <= 0) continue;
 
 const imagem =
 produto.imagens?.[0]
@@ -1378,7 +1501,7 @@ i.tamanho === tamanho
 
 if(existente){
 
-existente.quantidade++;
+existente.quantidade += qtd;
 
 }else{
 
@@ -1387,11 +1510,25 @@ id:produto.id,
 nome:produto.nome,
 tamanho,
 valor:Number(produto.valor),
-quantidade:1,
+quantidade:qtd,
 imagem
 });
 
 }
+
+adicionou = true;
+}
+
+if(!adicionou){
+
+alert(
+'Selecione pelo menos um tamanho'
+);
+
+return;
+}
+
+window.qtdProdutoSelecionada = {};
 
 atualizarCarrinho();
 
