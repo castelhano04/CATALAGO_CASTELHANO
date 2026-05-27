@@ -754,7 +754,58 @@ color:#d1d5db;
 ">
 
 📏 Tamanho:
-<b>${item.tamanho}</b><br>
+
+<select
+onchange="alterarTamanho(${index},this.value)"
+style="
+width:100%;
+margin-top:8px;
+height:38px;
+border-radius:10px;
+border:1px solid #333;
+background:#111;
+color:#fff;
+padding:0 10px;
+">
+
+${Object.keys(
+produtos.find(
+p => p.id === item.id
+)?.tamanhos || {}
+).map(tam => {
+
+const produto =
+produtos.find(
+p => p.id === item.id
+);
+
+const dados =
+produto.tamanhos[tam];
+
+const restante =
+(dados.total || 0) -
+(dados.vendido || 0);
+
+return `
+<option
+value="${tam}"
+${item.tamanho === tam
+? 'selected'
+: ''}
+
+${restante <= 0
+&& item.tamanho !== tam
+? 'disabled'
+: ''}>
+
+${tam} (${restante})
+
+</option>
+`;
+
+}).join('')}
+
+</select>
 
 💰 Valor:
 R$ ${subtotal.toFixed(2)}
@@ -889,7 +940,43 @@ carrinho.splice(index,1);
 
 }
 
+  window.alterarTamanho = function(index,novoTamanho){
+
+const item =
+carrinho[index];
+
+const produto =
+produtos.find(
+p => p.id === item.id
+);
+
+if(!produto) return;
+
+const dados =
+produto.tamanhos[novoTamanho];
+
+const estoqueDisponivel =
+(dados.total || 0) -
+(dados.vendido || 0);
+
+if(item.quantidade > estoqueDisponivel){
+
+alert(
+`Esse tamanho possui apenas
+${estoqueDisponivel}
+unidades disponíveis`
+);
+
+item.quantidade =
+Math.max(
+1,
+estoqueDisponivel
+);
+
 }
+
+item.tamanho =
+novoTamanho;
 
 atualizarCarrinho();
 
