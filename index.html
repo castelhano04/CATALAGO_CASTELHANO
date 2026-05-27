@@ -521,24 +521,6 @@ id="foto-${produto.id}"
 src="${imagens[0]}"
 class="produto-img">
 
-${
-imagens.length > 1
-? `
-<button
-class="foto-btn foto-prev"
-onclick="trocarFoto('${produto.id}',-1)">
-❮
-</button>
-
-<button
-class="foto-btn foto-next"
-onclick="trocarFoto('${produto.id}',1)">
-❯
-</button>
-`
-: ''
-}
-
 </div>
 
 <div class="info">
