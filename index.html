@@ -557,7 +557,7 @@ ${estoqueTexto}
 
 ${disponivel ? `
 <button
-onclick="abrirProduto('${produto.id}')">
+onclick="event.stopPropagation(); abrirProduto('${produto.id}')">
 COMPRAR
 </button>
 ` : `
@@ -754,15 +754,16 @@ color:#d1d5db;
 📏 Tamanho:
 
 <select
-onchange="alterarTamanho(${index},this.value)"
+id="tamProduto"
+onclick="event.stopPropagation()"
 style="
 width:100%;
-margin-top:8px;
-height:38px;
-border-radius:10px;
+height:48px;
+margin-top:20px;
+border-radius:12px;
+background:#1a1a1a;
+color:white;
 border:1px solid #333;
-background:#111;
-color:#fff;
 padding:0 10px;
 ">
 
