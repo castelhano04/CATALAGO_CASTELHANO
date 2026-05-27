@@ -941,7 +941,16 @@ carrinho.splice(index,1);
 
 }
 
-  window.alterarTamanho = function(index,novoTamanho){
+}
+
+atualizarCarrinho();
+
+}
+
+
+/* ALTERAR TAMANHO */
+
+window.alterarTamanho = function(index,novoTamanho){
 
 const item =
 carrinho[index];
@@ -982,7 +991,7 @@ novoTamanho;
 atualizarCarrinho();
 
 }
-
+  
 window.finalizarPedido = async function(){
 
 if(carrinho.length === 0){
