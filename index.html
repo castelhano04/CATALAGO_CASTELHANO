@@ -456,23 +456,13 @@ document.getElementById('produtos');
 
 lista.innerHTML='';
 
-produtos
-.filter(produto => {
-
-if(filtroAtual === 'Todos'){
-return true;
-}
-
-return produto.categoria === filtroAtual;
-
-})
-.forEach(produto=>{
+produtos.forEach(produto=>{
 
 if(
-  filtroAtual !== 'Todos' &&
-  produto.categoria !== filtroAtual
+filtroAtual !== 'Todos' &&
+produto.categoria !== filtroAtual
 ){
-  return;
+return;
 }
 
 let opcoes = '';
@@ -504,7 +494,6 @@ opcoes += `
 ${t} (${restante})
 </option>
 `;
-
 }
 }
 }
@@ -517,7 +506,7 @@ produto.img
 ? [produto.img]
 : ['https://via.placeholder.com/300x300?text=Sem+Imagem']
 );
-  
+
 lista.innerHTML += `
 <div class="card">
 
