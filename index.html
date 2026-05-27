@@ -400,7 +400,9 @@ from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import {
 getFirestore,
 collection,
-getDocs
+getDocs,
+doc,
+updateDoc
 }
 from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
@@ -576,27 +578,78 @@ ESGOTADO
 window.addCarrinho = function(id){
 
 const produto =
-produtos.find(p=>p.id===id);
+produtos.find(p => p.id === id);
+
+if(!produto) return;
 
 const tamanho =
 document.getElementById(
 `tam-${id}`
-)?.value || 'Único';
+)?.value;
+
+if(!tamanho){
+alert('Selecione um tamanho');
+return;
+}
+
+const estoqueAtual =
+produto.tamanhos[tamanho];
+
+const disponivel =
+estoqueAtual.total -
+estoqueAtual.vendido;
+
+// vê quanto já existe no carrinho
+const itemExistente =
+carrinho.find(item =>
+item.id === id &&
+item.tamanho === tamanho
+);
+
+const qtdCarrinho =
+itemExistente
+? itemExistente.quantidade
+: 0;
+
+// impede passar do estoque
+if(qtdCarrinho >= disponivel){
+
+alert(
+`Só existem ${disponivel} unidade(s) do tamanho ${tamanho}`
+);
+
+return;
+}
 
 const imagem =
 produto.imagens?.[0]
 || produto.img
 || '';
 
+if(itemExistente){
+
+itemExistente.quantidade++;
+
+}else{
+
 carrinho.push({
-nome:produto.nome,
+id: produto.id,
+nome: produto.nome,
 tamanho,
-valor:Number(produto.valor),
-quantidade:1,
+valor: Number(produto.valor),
+quantidade: 1,
 imagem
 });
 
+}
+
 atualizarCarrinho();
+
+alert(
+`${produto.nome}
+Tamanho ${tamanho}
+adicionado ao carrinho`
+);
 
 }
 
@@ -701,13 +754,59 @@ html;
 
 }
 
-window.finalizarPedido = function(){
+window.finalizarPedido = async function(){
 
-if(carrinho.length===0){
+if(carrinho.length === 0){
 alert('Carrinho vazio');
 return;
 }
 
+try{
+
+// BAIXA ESTOQUE NO FIREBASE
+for(const item of carrinho){
+
+const produto =
+produtos.find(p => p.id === item.id);
+
+if(!produto) continue;
+
+const tamanho =
+produto.tamanhos[item.tamanho];
+
+if(!tamanho) continue;
+
+// confere estoque real
+const disponivel =
+tamanho.total -
+tamanho.vendido;
+
+if(item.quantidade > disponivel){
+
+alert(
+`Estoque insuficiente para:
+${produto.nome}
+Tamanho ${item.tamanho}`
+);
+
+return;
+}
+
+// baixa quantidade vendida
+tamanho.vendido +=
+item.quantidade;
+
+await updateDoc(
+doc(db,'produtos',item.id),
+{
+tamanhos:
+produto.tamanhos
+}
+);
+
+}
+
+// MONTA MENSAGEM WHATSAPP
 let mensagem =
 '🛒 *NOVO PEDIDO - CASTELHANO SPORTS*%0A%0A';
 
@@ -716,7 +815,8 @@ let total = 0;
 carrinho.forEach((item,index)=>{
 
 const subtotal =
-item.valor * item.quantidade;
+item.valor *
+item.quantidade;
 
 total += subtotal;
 
@@ -731,10 +831,30 @@ mensagem +=
 mensagem +=
 `💵 *TOTAL: R$ ${total.toFixed(2)}*`;
 
+// limpa carrinho
+carrinho = [];
+atualizarCarrinho();
+
+// recarrega produtos
+await carregar();
+
 window.open(
 `https://wa.me/5547991938901?text=${mensagem}`,
 '_blank'
 );
+
+alert('Pedido enviado e estoque atualizado!');
+
+}catch(e){
+
+console.error(e);
+
+alert(
+'Erro ao finalizar pedido: ' +
+e.message
+);
+
+}
 
 }
   
