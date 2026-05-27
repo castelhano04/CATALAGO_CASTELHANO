@@ -595,11 +595,17 @@ document.getElementById(
 `tam-${id}`
 )?.value || 'Único';
 
+const imagem =
+produto.imagens?.[0]
+|| produto.img
+|| '';
+
 carrinho.push({
 nome:produto.nome,
 tamanho,
 valor:Number(produto.valor),
-quantidade:1
+quantidade:1,
+imagem
 });
 
 atualizarCarrinho();
@@ -648,8 +654,24 @@ html += `
 margin-bottom:12px;
 padding:10px;
 background:#1a1a1a;
-border-radius:10px;
+border-radius:12px;
+display:flex;
+gap:10px;
+align-items:center;
 ">
+
+<img src="${item.imagem}"
+style="
+width:70px;
+height:70px;
+object-fit:contain;
+background:#111;
+border-radius:10px;
+padding:4px;
+border:1px solid #333;
+">
+
+<div style="flex:1;">
 
 <b>${item.nome}</b><br>
 
@@ -661,6 +683,8 @@ ${item.quantidade}<br>
 
 💰 R$
 ${subtotal.toFixed(2)}
+
+</div>
 
 </div>
 `;
@@ -692,12 +716,36 @@ alert('Carrinho vazio');
 return;
 }
 
+let mensagem =
+'🛒 *NOVO PEDIDO - CASTELHANO SPORTS*%0A%0A';
+
+let total = 0;
+
+carrinho.forEach((item,index)=>{
+
+const subtotal =
+item.valor * item.quantidade;
+
+total += subtotal;
+
+mensagem +=
+`*${index+1}. ${item.nome}*%0A` +
+`📏 Tamanho: ${item.tamanho}%0A` +
+`🔢 Quantidade: ${item.quantidade}%0A` +
+`💰 Valor: R$ ${subtotal.toFixed(2)}%0A%0A`;
+
+});
+
+mensagem +=
+`💵 *TOTAL: R$ ${total.toFixed(2)}*`;
+
 window.open(
-'https://wa.me/5547991938901',
+`https://wa.me/5547991938901?text=${mensagem}`,
 '_blank'
 );
 
 }
+  
 /* ABRIR CARRINHO */
 
 window.abrirCarrinho = function(){
