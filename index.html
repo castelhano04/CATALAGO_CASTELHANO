@@ -677,7 +677,7 @@ document.getElementById(
 
 let totalItens = 0;
 
-if(carrinho.length===0){
+if(carrinho.length === 0){
 
 div.innerHTML =
 'Carrinho vazio';
@@ -690,7 +690,7 @@ return;
 let total = 0;
 let html = '';
 
-carrinho.forEach(item=>{
+carrinho.forEach((item,index)=>{
 
 totalItens += item.quantidade;
 
@@ -707,7 +707,25 @@ padding:12px;
 background:#1a1a1a;
 border-radius:14px;
 text-align:center;
+position:relative;
 ">
+
+<button
+onclick="removerItem(${index})"
+style="
+position:absolute;
+top:10px;
+right:10px;
+width:34px;
+height:34px;
+border:none;
+border-radius:50%;
+background:#dc2626;
+font-size:16px;
+cursor:pointer;
+">
+🗑
+</button>
 
 <img src="${item.imagem}"
 style="
@@ -735,9 +753,60 @@ line-height:1.8;
 color:#d1d5db;
 ">
 
-Tamanho: ${item.tamanho}<br>
-Quantidade: ${item.quantidade}<br>
-Valor: R$ ${subtotal.toFixed(2)}
+📏 Tamanho:
+<b>${item.tamanho}</b><br>
+
+💰 Valor:
+R$ ${subtotal.toFixed(2)}
+
+</div>
+
+<div style="
+display:flex;
+justify-content:center;
+align-items:center;
+gap:12px;
+margin-top:12px;
+">
+
+<button
+onclick="alterarQtd(${index},-1)"
+style="
+width:42px;
+height:42px;
+border:none;
+border-radius:50%;
+background:#dc2626;
+font-size:22px;
+color:white;
+cursor:pointer;
+">
+−
+</button>
+
+<div style="
+font-size:20px;
+font-weight:bold;
+min-width:30px;
+text-align:center;
+">
+${item.quantidade}
+</div>
+
+<button
+onclick="alterarQtd(${index},1)"
+style="
+width:42px;
+height:42px;
+border:none;
+border-radius:50%;
+background:#16a34a;
+font-size:22px;
+color:white;
+cursor:pointer;
+">
++
+</button>
 
 </div>
 
@@ -753,6 +822,7 @@ html += `
 <h3 style="
 margin-top:10px;
 color:#22c55e;
+text-align:center;
 ">
 TOTAL:
 R$ ${total.toFixed(2)}
@@ -761,6 +831,67 @@ R$ ${total.toFixed(2)}
 
 div.innerHTML =
 html;
+
+}
+
+/* REMOVER ITEM */
+
+window.removerItem = function(index){
+
+carrinho.splice(index,1);
+
+atualizarCarrinho();
+
+}
+
+/* ALTERAR QUANTIDADE */
+
+window.alterarQtd = function(index,valor){
+
+const item =
+carrinho[index];
+
+const produto =
+produtos.find(
+p => p.id === item.id
+);
+
+if(!produto) return;
+
+const dadosTamanho =
+produto.tamanhos[item.tamanho];
+
+const estoqueDisponivel =
+(dadosTamanho.total || 0) -
+(dadosTamanho.vendido || 0);
+
+if(valor > 0){
+
+if(item.quantidade >= estoqueDisponivel){
+
+alert(
+`Só existem ${estoqueDisponivel}
+unidades disponíveis`
+);
+
+return;
+}
+
+item.quantidade++;
+
+}else{
+
+item.quantidade--;
+
+if(item.quantidade <= 0){
+
+carrinho.splice(index,1);
+
+}
+
+}
+
+atualizarCarrinho();
 
 }
 
