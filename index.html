@@ -356,21 +356,6 @@ background:#ea580c;
 background:#ea580c;
 box-shadow:0 0 10px rgba(234,88,12,.35);
 }
-  .filtros{
-  padding:12px;
-  background:#111;
-  border-bottom:1px solid #222;
-}
-
-#filtroCategoria{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid #333;
-  background:#1b1b1b;
-  color:white;
-  font-size:15px;
-}
   
 </style>
 </head>
@@ -402,19 +387,6 @@ Times BR
 <button onclick="filtrar('Selecao Brasileira')">
 Seleção BR
 </button>
-
-</div>
-  
-  <div class="filtros">
-
-  <option value="Todos">Todos</option>
-  <option value="Europeias">Camisas Europeias</option>
-  <option value="Selecoes">Seleções</option>
-  <option value="Times BR">Times BR</option>
-  <option value="Selecao Brasileira">
-    Seleção Brasileira
-  </option>
-</select>
 
 </div>
   
@@ -476,16 +448,6 @@ render();
 }
   
   carregar();
-  
-window.filtrarProdutos = function(){
-
-  filtroAtual =
-  document.getElementById(
-    'filtroCategoria'
-  ).value;
-
-  render();
-}
   
 function render(){
 
