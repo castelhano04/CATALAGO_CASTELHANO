@@ -511,9 +511,10 @@ produto.img
 
 lista.innerHTML += `
 <div class="card"
-onclick="abrirProduto('${produto.id}')">
 
-<div class="foto-box">
+<div
+class="foto-box"
+onclick="abrirProduto('${produto.id}')">
 
 <img
 id="foto-${produto.id}"
@@ -555,19 +556,15 @@ ${estoqueTexto}
 </div>
 
 ${disponivel ? `
-<select id="tam-${produto.id}">
-${opcoes}
-</select>
-
-<button onclick="addCarrinho('${produto.id}')">
-ADICIONAR AO CARRINHO
+<button
+onclick="abrirProduto('${produto.id}')">
+COMPRAR
 </button>
 ` : `
 <button disabled>
 ESGOTADO
 </button>
 `}
-
 </div>
 </div>
 `;
