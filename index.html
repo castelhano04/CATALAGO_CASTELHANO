@@ -1133,46 +1133,43 @@ document.getElementById(
 ).src =
 imagens[window.fotoAtual[id]];
 }
-  window.qtdProdutoSelecionada = {};
+ window.qtdProdutoSelecionada = {};
 
-window.mudarQtdProduto = function(tamanho,valor){
-
-if(!window.qtdProdutoSelecionada[tamanho]){
-window.qtdProdutoSelecionada[tamanho] = 0;
-}
-
-const produto =
-window.produtoAtual;
-
-if(!produto) return;
-
-const dados =
-produto.tamanhos[tamanho];
-
-const estoqueDisponivel =
-(dados.total || 0) -
-(dados.vendido || 0);
-
-window.qtdProdutoSelecionada[tamanho] += valor;
+window.alterarQtdProduto =
+function(tamanho,valor,maximo){
 
 if(
-window.qtdProdutoSelecionada[tamanho] < 0
+!window.qtdProdutoSelecionada[
+tamanho
+]
 ){
-window.qtdProdutoSelecionada[tamanho] = 0;
+window.qtdProdutoSelecionada[
+tamanho
+] = 0;
 }
 
-if(
-window.qtdProdutoSelecionada[tamanho] >
-estoqueDisponivel
-){
-window.qtdProdutoSelecionada[tamanho] =
-estoqueDisponivel;
+let atual =
+window.qtdProdutoSelecionada[
+tamanho
+];
+
+atual += valor;
+
+if(atual < 0){
+atual = 0;
 }
+
+if(atual > maximo){
+atual = maximo;
+}
+
+window.qtdProdutoSelecionada[
+tamanho
+] = atual;
 
 document.getElementById(
 `qtd-${tamanho}`
-).innerText =
-window.qtdProdutoSelecionada[tamanho];
+).innerText = atual;
 
 }
   
