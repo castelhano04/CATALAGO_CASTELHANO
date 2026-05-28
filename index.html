@@ -368,23 +368,23 @@ box-shadow:0 0 10px rgba(234,88,12,.35);
 </div>
 <div class="filtros">
 
-<button onclick="filtrar('Todos')">
+<button onclick="filtrar('Todos', this)">
 Todos
 </button>
 
-<button onclick="filtrar('Europeias')">
+<button onclick="filtrar('Europeias', this)">
 Europeias
 </button>
 
-<button onclick="filtrar('Selecoes')">
+<button onclick="filtrar('Selecoes', this)">
 Seleções
 </button>
 
-<button onclick="filtrar('Times BR')">
+<button onclick="filtrar('Times BR', this)">
 Times BR
 </button>
 
-<button onclick="filtrar('Selecao Brasileira')">
+<button onclick="filtrar('Selecao Brasileira', this)">
 Seleção BR
 </button>
 
@@ -441,9 +441,17 @@ id:doc.id,
 
 }
   
-  window.filtrar = function(categoria){
+  window.filtrar = function(categoria, botao){
 
 filtroAtual = categoria;
+
+document
+.querySelectorAll('.filtros button')
+.forEach(btn =>
+btn.classList.remove('ativo')
+);
+
+botao.classList.add('ativo');
 
 render();
 
@@ -554,95 +562,7 @@ ESGOTADO
 });
 
 }
-
-window.addCarrinho = function(id){
-
-const produto =
-produtos.find(p => p.id === id);
-
-if(!produto){
-alert('Produto não encontrado');
-return;
-}
-
-const tamanho =
-document.getElementById(
-`tam-${id}`
-)?.value;
-
-if(!tamanho){
-alert('Selecione um tamanho');
-return;
-}
-
-const dadosTamanho =
-produto.tamanhos[tamanho];
-
-if(!dadosTamanho){
-alert('Tamanho inválido');
-return;
-}
-
-// estoque real
-const estoqueDisponivel =
-(dadosTamanho.total || 0) -
-(dadosTamanho.vendido || 0);
-
-// conta quantas desse tamanho já existem no carrinho
-const quantidadeNoCarrinho =
-carrinho
-.filter(item =>
-item.id === id &&
-item.tamanho === tamanho
-)
-.reduce((acc,item)=>
-acc + item.quantidade,0);
-
-// BLOQUEIA SE PASSAR DO ESTOQUE
-if(
-quantidadeNoCarrinho >=
-estoqueDisponivel
-){
-
-alert(
-`Só existem ${estoqueDisponivel} unidade(s) do tamanho ${tamanho}`
-);
-
-return;
-}
-
-const imagem =
-produto.imagens?.[0]
-|| produto.img
-|| '';
-
-const itemExistente =
-carrinho.find(item =>
-item.id === id &&
-item.tamanho === tamanho
-);
-
-if(itemExistente){
-
-itemExistente.quantidade += 1;
-
-}else{
-
-carrinho.push({
-id: produto.id,
-nome: produto.nome,
-tamanho,
-valor: Number(produto.valor),
-quantidade: 1,
-imagem
-});
-
-}
-
-atualizarCarrinho();
-
-}
-  
+ 
 function atualizarCarrinho(){
 
 const div =
@@ -1044,47 +964,6 @@ novoTamanho;
 atualizarCarrinho();
 
 };
-
-  window.itemEditando = null;
-
-window.editarItemCarrinho =
-function(index){
-
-const item =
-carrinho[index];
-
-if(!item) return;
-
-window.itemEditando = index;
-
-// abre produto
-abrirProduto(item.id);
-
-// espera modal abrir
-setTimeout(()=>{
-
-// zera seleção
-window.qtdProdutoSelecionada = {};
-
-// já marca o tamanho atual
-window.qtdProdutoSelecionada[
-item.tamanho
-] = item.quantidade;
-
-// atualiza visual
-const el =
-document.getElementById(
-`qtd-${item.tamanho}`
-);
-
-if(el){
-el.innerText =
-item.quantidade;
-}
-
-},150);
-
-}
   
 window.finalizarPedido = async function(){
 
@@ -1288,6 +1167,8 @@ document.getElementById(
 }
   
   window.abrirProduto = function(id){
+
+    window.qtdProdutoSelecionada = {};
 
 const produto =
 produtos.find(
@@ -1576,92 +1457,6 @@ window.indexModal
 
 }
 
-window.itemEditando = null;
-
-for(
-let tamanho in
-window.qtdProdutoSelecionada
-){
-
-const qtd =
-window.qtdProdutoSelecionada[
-tamanho
-];
-
-if(qtd <= 0) continue;
-
-const imagem =
-produto.imagens?.[0]
-|| produto.img
-|| '';
-
-const existente =
-carrinho.find(
-i =>
-i.id === produto.id &&
-i.tamanho === tamanho
-);
-
-if(existente){
-
-existente.quantidade += qtd;
-
-}else{
-
-carrinho.push({
-id:produto.id,
-nome:produto.nome,
-tamanho,
-valor:Number(produto.valor),
-quantidade:qtd,
-imagem
-});
-
-}
-
-if(!adicionou){
-
-alert(
-'Selecione pelo menos um tamanho'
-);
-
-return;
-}
-
-window.qtdProdutoSelecionada = {};
-
-atualizarCarrinho();
-
-fecharProduto();
-
-abrirCarrinho();
-
-}
-  window.salvarProdutoCarrinho = function(id){
-
-const produto =
-produtos.find(p => p.id === id);
-
-if(!produto) return;
-
-// SE ESTIVER EDITANDO
-if(window.itemEditando != null){
-
-window.salvarProdutoCarrinho = function(id){
-
-const produto =
-produtos.find(p => p.id === id);
-
-if(!produto) return;
-
-// remove item antigo se estiver editando
-if(window.itemEditando !== null){
-
-carrinho.splice(
-window.itemEditando,
-1
-);
-
 window.salvarProdutoCarrinho = function(id){
 
 const produto =
@@ -1721,9 +1516,11 @@ adicionou = true;
 }
 
 if(!adicionou){
+
 alert(
 'Selecione pelo menos um tamanho'
 );
+
 return;
 }
 
@@ -1737,11 +1534,9 @@ abrirCarrinho();
 
 }
   
-  window.editarItemCarrinho =
-function(index){
+  window.editarItemCarrinho = function(index){
 
-const item =
-carrinho[index];
+const item = carrinho[index];
 
 if(!item) return;
 
