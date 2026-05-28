@@ -1222,7 +1222,7 @@ document.getElementById(
 
 <div style="
 background:#f5f5f5;
-border-radius:35px 35px 0 0;
+border-radius:40px 40px 0 0;
 overflow:hidden;
 min-height:100vh;
 color:#111;
@@ -1368,9 +1368,7 @@ cursor:pointer;
 box-shadow:none;
 letter-spacing:.5px;
 ">
-${window.itemEditando !== null
-? 'SALVAR ALTERAÇÃO'
-: 'ADICIONAR AO PEDIDO'}
+ADICIONAR AO CARRINHO
 </button>
 
 </div>
@@ -1648,19 +1646,29 @@ padding:20px;
 <button
 onclick="fecharProduto()"
 style="
-width:50px;
-height:50px;
+position:absolute;
+top:18px;
+right:18px;
+width:58px;
+height:58px;
 border:none;
-border-radius:12px;
-background:#1f1f1f;
+border-radius:50%;
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.15);
 color:white;
-font-size:24px;
-margin-bottom:15px;
+font-size:34px;
+font-weight:300;
 cursor:pointer;
+z-index:999;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:.2s;
 ">
-←
+✕
 </button>
-
+  
 <div id="produtoDetalhes"></div>
 
 </div>
