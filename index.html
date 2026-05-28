@@ -604,6 +604,7 @@ produtosAgrupados[item.id] = {
 nome:item.nome,
 imagem:item.imagem,
 id:item.id,
+valor:item.valor,
 itens:[]
 };
 
@@ -620,36 +621,6 @@ indexOriginal:index
 Object.values(produtosAgrupados)
 .forEach(produto=>{
 
-html += `
-<div style="
-margin-bottom:14px;
-padding:14px;
-background:#1a1a1a;
-border-radius:18px;
-border:1px solid #2a2a2a;
-">
-
-<img src="${produto.imagem}"
-style="
-width:100%;
-height:150px;
-object-fit:contain;
-background:#111;
-border-radius:12px;
-padding:8px;
-margin-bottom:10px;
-">
-
-<div style="
-font-size:18px;
-font-weight:bold;
-text-align:center;
-margin-bottom:12px;
-">
-${produto.nome}
-</div>
-`;
-
 let totalProduto = 0;
 let tamanhosHTML = '';
 
@@ -662,6 +633,26 @@ item.valor * item.quantidade;
 
 total += subtotal;
 totalProduto += subtotal;
+
+tamanhosHTML += `
+<div style="
+display:flex;
+justify-content:space-between;
+padding:5px 0;
+border-bottom:1px solid #222;
+font-size:14px;
+">
+<span>
+${item.tamanho}
+</span>
+
+<span>
+${item.quantidade} peça${item.quantidade > 1 ? 's' : ''}
+</span>
+</div>
+`;
+
+});
 
 html += `
 <div style="
@@ -714,16 +705,11 @@ R$ ${totalProduto.toFixed(2)}
 ${tamanhosHTML}
 
 </div>
+
 </div>
 `;
 
-}); // fecha Object.values(...).forEach
-
-contador.innerText =
-totalItens;
-
-contador.innerText =
-totalItens;
+});
 
 html += `
 <div style="
@@ -749,9 +735,7 @@ R$ ${total.toFixed(2)}
 div.innerHTML = html;
 contador.innerText = totalItens;
 
-} // FECHA atualizarCarrinho()
-  
-
+}
 
 /* REMOVER ITEM */
 
