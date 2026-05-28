@@ -570,22 +570,16 @@ ESGOTADO
 function atualizarCarrinho(){
 
 const div =
-document.getElementById(
-'itensCarrinho'
-);
+document.getElementById('itensCarrinho');
 
 const contador =
-document.getElementById(
-'cartCount'
-);
+document.getElementById('cartCount');
 
 let totalItens = 0;
 
 if(carrinho.length === 0){
 
-div.innerHTML =
-'Carrinho vazio';
-
+div.innerHTML = 'Carrinho vazio';
 contador.innerText = 0;
 
 return;
@@ -736,7 +730,6 @@ div.innerHTML = html;
 contador.innerText = totalItens;
 
 }
-
 /* REMOVER ITEM */
 
 window.removerItem = function(index){
