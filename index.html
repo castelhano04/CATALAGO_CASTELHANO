@@ -1211,14 +1211,12 @@ document.getElementById(
 
 }
   
-  window.abrirProduto = function(id){
+window.abrirProduto = function(id){
 
-    window.qtdProdutoSelecionada = {};
+window.qtdProdutoSelecionada = {};
 
 const produto =
-produtos.find(
-p => p.id === id
-);
+produtos.find(p => p.id === id);
 
 if(!produto) return;
 
@@ -1239,7 +1237,7 @@ let opcoes = '';
 
 ordemTamanhos.forEach(t => {
 
-const d = produto.tamanhos[t];
+const d = produto.tamanhos?.[t];
 
 if(!d) return;
 
@@ -1254,17 +1252,18 @@ opcoes += `
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:white;
+background:#fff;
 padding:16px;
 border-radius:20px;
-box-shadow:0 2px 10px rgba(0,0,0,.05);
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+margin-bottom:12px;
 ">
 
 <div>
-
 <div style="
 font-size:24px;
 font-weight:bold;
+color:#111;
 ">
 ${t}
 </div>
@@ -1276,7 +1275,6 @@ margin-top:4px;
 ">
 ${restante} disponíveis
 </div>
-
 </div>
 
 <div style="
@@ -1286,7 +1284,7 @@ gap:16px;
 ">
 
 <button
-onclick="alterarQtdProduto('${t}',-1)"
+onclick="alterarQtdProduto('${t}',-1,${restante})"
 style="
 width:42px;
 height:42px;
@@ -1296,6 +1294,7 @@ background:white;
 font-size:26px;
 font-weight:bold;
 color:#111;
+cursor:pointer;
 ">
 −
 </button>
@@ -1303,10 +1302,11 @@ color:#111;
 <div
 id="qtd-${t}"
 style="
-font-size:28px;
+font-size:26px;
 font-weight:bold;
 min-width:28px;
 text-align:center;
+color:#111;
 ">
 0
 </div>
@@ -1322,16 +1322,17 @@ background:#ea580c;
 font-size:24px;
 font-weight:bold;
 color:white;
+cursor:pointer;
 ">
 +
 </button>
 
 </div>
-
 </div>
 `;
-    });
-    
+
+}); // FECHAMENTO CERTO
+
 document.getElementById(
 'produtoDetalhes'
 ).innerHTML = `
@@ -1429,9 +1430,7 @@ box-shadow:0 3px 10px rgba(0,0,0,.15);
 </div>
 
 <!-- INFO -->
-<div style="
-padding:28px;
-">
+<div style="padding:28px;">
 
 <div style="
 font-size:34px;
@@ -1495,9 +1494,7 @@ ${window.itemEditando !== null
 </div>
 `;
 
-window.imagensModal =
-imagens;
-
+window.imagensModal = imagens;
 window.indexModal = 0;
 
 document.getElementById(
