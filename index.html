@@ -635,55 +635,70 @@ justify-content:space-between;
 align-items:center;
 padding:8px 0;
 border-bottom:1px solid #222;
-font-size:14px;
 gap:10px;
 ">
 
 <div>
-<b>${item.tamanho}</b><br>
+<div style="
+font-size:16px;
+font-weight:bold;
+">
+${item.tamanho}
+</div>
+
+<div style="
+font-size:13px;
+color:#fff;
+">
 ${item.quantidade} peça${item.quantidade > 1 ? 's' : ''}
+</div>
 </div>
 
 <div style="
 display:flex;
-gap:6px;
+align-items:center;
+gap:8px;
 ">
 
 <button
-onclick="editarItemCarrinho(${item.indexOriginal})"
+onclick="alterarQtdCarrinho(${item.indexOriginal}, -1)"
 style="
-width:38px;
-height:38px;
+width:34px;
+height:34px;
+border:none;
+border-radius:10px;
+background:#222;
+color:#fff;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+padding:0;
+">
+−
+</button>
+
+<button
+onclick="alterarQtdCarrinho(${item.indexOriginal}, 1)"
+style="
+width:34px;
+height:34px;
 border:none;
 border-radius:10px;
 background:#2563eb;
 color:white;
-font-size:18px;
+font-size:20px;
+font-weight:bold;
 cursor:pointer;
+padding:0;
 ">
-✏️
-</button>
-
-<button
-onclick="removerItem(${item.indexOriginal})"
-style="
-width:38px;
-height:38px;
-border:none;
-border-radius:10px;
-background:#dc2626;
-color:white;
-font-size:18px;
-cursor:pointer;
-">
-🗑️
++
 </button>
 
 </div>
 
 </div>
 `;
-
+  
 });
 
 html += `
@@ -1511,43 +1526,56 @@ item.quantidade;
 
 };
   
-  window.removerItem = function(index){
-
-carrinho.splice(index,1);
-
-atualizarCarrinho();
-
-};
-
-window.editarItemCarrinho = function(index){
+ window.alterarQtdCarrinho = function(index, valor){
 
 const item = carrinho[index];
 
 if(!item) return;
 
-window.itemEditando = index;
-
-abrirProduto(item.id);
-
-setTimeout(()=>{
-
-window.qtdProdutoSelecionada = {};
-
-window.qtdProdutoSelecionada[
-item.tamanho
-] = item.quantidade;
-
-const el =
-document.getElementById(
-`qtd-${item.tamanho}`
+const produto =
+produtos.find(
+p => p.id === item.id
 );
 
-if(el){
-el.innerText =
-item.quantidade;
+if(!produto) return;
+
+const dadosTamanho =
+produto.tamanhos[item.tamanho];
+
+if(!dadosTamanho) return;
+
+const estoqueDisponivel =
+(dadosTamanho.total || 0) -
+(dadosTamanho.vendido || 0);
+
+// ADICIONAR
+if(valor > 0){
+
+if(item.quantidade >= estoqueDisponivel){
+
+alert('Estoque insuficiente');
+
+return;
 }
 
-},100);
+item.quantidade++;
+
+}
+
+// REMOVER
+else{
+
+item.quantidade--;
+
+if(item.quantidade <= 0){
+
+carrinho.splice(index,1);
+
+}
+
+}
+
+atualizarCarrinho();
 
 };
   
