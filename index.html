@@ -441,23 +441,27 @@ id:doc.id,
 
 }
   
-  window.filtrar = function(categoria, botao){
+ window.filtrar = function(categoria, botao){
 
 filtroAtual = categoria;
 
+// remove ativo
 document
 .querySelectorAll('.filtros button')
 .forEach(btn =>
 btn.classList.remove('ativo')
 );
 
+// adiciona classe ativa
+if(botao){
 botao.classList.add('ativo');
+}
 
 render();
 
 }
-  
-  carregar();
+
+carregar();
   
 function render(){
 
