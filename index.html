@@ -510,7 +510,7 @@ produto.img
 );
 
 lista.innerHTML += `
-<div class="card"
+<div class="card">
 
 <div
 class="foto-box"
@@ -670,7 +670,63 @@ return;
 let total = 0;
 let html = '';
 
+const produtosAgrupados = {};
+
 carrinho.forEach((item,index)=>{
+
+if(!produtosAgrupados[item.id]){
+
+produtosAgrupados[item.id] = {
+nome:item.nome,
+imagem:item.imagem,
+id:item.id,
+itens:[]
+};
+
+}
+
+produtosAgrupados[item.id]
+.itens.push({
+...item,
+indexOriginal:index
+});
+
+});
+
+Object.values(produtosAgrupados)
+.forEach(produto=>{
+
+html += `
+<div style="
+margin-bottom:14px;
+padding:14px;
+background:#1a1a1a;
+border-radius:18px;
+border:1px solid #2a2a2a;
+">
+
+<img src="${produto.imagem}"
+style="
+width:100%;
+height:150px;
+object-fit:contain;
+background:#111;
+border-radius:12px;
+padding:8px;
+margin-bottom:10px;
+">
+
+<div style="
+font-size:18px;
+font-weight:bold;
+text-align:center;
+margin-bottom:12px;
+">
+${produto.nome}
+</div>
+`;
+
+produto.itens.forEach(item=>{
 
 totalItens += item.quantidade;
 
@@ -682,71 +738,74 @@ total += subtotal;
 
 html += `
 <div style="
-margin-bottom:12px;
+background:#111;
 padding:12px;
-background:#1a1a1a;
 border-radius:14px;
-text-align:center;
-position:relative;
+margin-bottom:10px;
 ">
 
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+">
+
+<div style="
+font-size:16px;
+font-weight:bold;
+">
+📏 ${item.tamanho}
+</div>
+
 <button
-onclick="removerItem(${index})"
+onclick="editarItemCarrinho(${item.indexOriginal})"
 style="
-position:absolute;
-top:10px;
-right:10px;
+width:34px;
+height:34px;
+border:none;
+border-radius:50%;
+background:#2563eb;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-right:6px;
+">
+✏️
+</button>
+
+<button
+onclick="removerItem(${item.indexOriginal})"
+style="
 width:34px;
 height:34px;
 border:none;
 border-radius:50%;
 background:#dc2626;
+color:white;
 font-size:16px;
 cursor:pointer;
 ">
 🗑
 </button>
 
-<img src="${item.imagem}"
-style="
-width:100%;
-height:140px;
-object-fit:contain;
-background:#111;
-border-radius:12px;
-padding:8px;
-border:1px solid #333;
-margin-bottom:10px;
-">
-
-<div style="
-font-size:15px;
-font-weight:bold;
-margin-bottom:8px;
-">
-${item.nome}
 </div>
 
-<div style="
-font-size:14px;
-line-height:1.8;
-color:#d1d5db;
-">
-
-📏 Tamanho:
-
 <select
-id="tamProduto"
-onclick="event.stopPropagation()"
+onchange="
+alterarTamanho(
+${item.indexOriginal},
+this.value
+)"
 style="
 width:100%;
-height:48px;
-margin-top:20px;
-border-radius:12px;
+height:42px;
+border-radius:10px;
 background:#1a1a1a;
 color:white;
 border:1px solid #333;
 padding:0 10px;
+margin-bottom:10px;
 ">
 
 ${Object.keys(
@@ -755,13 +814,13 @@ p => p.id === item.id
 )?.tamanhos || {}
 ).map(tam => {
 
-const produto =
+const produtoBanco =
 produtos.find(
 p => p.id === item.id
 );
 
 const dados =
-produto.tamanhos[tam];
+produtoBanco.tamanhos[tam];
 
 const restante =
 (dados.total || 0) -
@@ -774,13 +833,11 @@ ${item.tamanho === tam
 ? 'selected'
 : ''}
 
-${restante <= 0
-&& item.tamanho !== tam
+${restante <= 0 &&
+item.tamanho !== tam
 ? 'disabled'
 : ''}>
-
 ${tam} (${restante})
-
 </option>
 `;
 
@@ -788,21 +845,19 @@ ${tam} (${restante})
 
 </select>
 
-💰 Valor:
-R$ ${subtotal.toFixed(2)}
-
-</div>
-
 <div style="
 display:flex;
 justify-content:center;
 align-items:center;
 gap:12px;
-margin-top:12px;
 ">
 
 <button
-onclick="alterarQtd(${index},-1)"
+onclick="
+alterarQtd(
+${item.indexOriginal},
+-1
+)"
 style="
 width:42px;
 height:42px;
@@ -811,7 +866,6 @@ border-radius:50%;
 background:#dc2626;
 font-size:22px;
 color:white;
-cursor:pointer;
 ">
 −
 </button>
@@ -826,7 +880,11 @@ ${item.quantidade}
 </div>
 
 <button
-onclick="alterarQtd(${index},1)"
+onclick="
+alterarQtd(
+${item.indexOriginal},
+1
+)"
 style="
 width:42px;
 height:42px;
@@ -835,13 +893,28 @@ border-radius:50%;
 background:#16a34a;
 font-size:22px;
 color:white;
-cursor:pointer;
 ">
 +
 </button>
 
 </div>
 
+<div style="
+text-align:center;
+margin-top:10px;
+font-size:16px;
+font-weight:bold;
+color:#22c55e;
+">
+💰 R$ ${subtotal.toFixed(2)}
+</div>
+
+</div>
+`;
+
+});
+
+html += `
 </div>
 `;
 
@@ -971,6 +1044,47 @@ novoTamanho;
 atualizarCarrinho();
 
 };
+
+  window.itemEditando = null;
+
+window.editarItemCarrinho =
+function(index){
+
+const item =
+carrinho[index];
+
+if(!item) return;
+
+window.itemEditando = index;
+
+// abre produto
+abrirProduto(item.id);
+
+// espera modal abrir
+setTimeout(()=>{
+
+// zera seleção
+window.qtdProdutoSelecionada = {};
+
+// já marca o tamanho atual
+window.qtdProdutoSelecionada[
+item.tamanho
+] = item.quantidade;
+
+// atualiza visual
+const el =
+document.getElementById(
+`qtd-${item.tamanho}`
+);
+
+if(el){
+el.innerText =
+item.quantidade;
+}
+
+},150);
+
+}
   
 window.finalizarPedido = async function(){
 
@@ -1398,7 +1512,7 @@ ${opcoes}
 </div>
 
 <button
-onclick="addCarrinhoProduto('${produto.id}')"
+onclick="salvarProdutoCarrinho('${produto.id}')"
 style="
 width:100%;
 height:52px;
@@ -1410,7 +1524,9 @@ color:white;
 font-size:16px;
 font-weight:bold;
 ">
-ADICIONAR AO CARRINHO
+${window.itemEditando !== null
+? 'SALVAR ALTERAÇÃO'
+: 'ADICIONAR AO CARRINHO'}
 </button>
 `;
 
@@ -1460,17 +1576,9 @@ window.indexModal
 
 }
 
-window.addCarrinhoProduto =
-function(id){
+window.itemEditando = null;
 
-const produto =
-produtos.find(
-p => p.id === id
-);
-
-if(!produto) return;
-
-let adicionou = false;
+}
 
 for(
 let tamanho in
@@ -1513,9 +1621,6 @@ imagem
 
 }
 
-adicionou = true;
-}
-
 if(!adicionou){
 
 alert(
@@ -1532,6 +1637,129 @@ atualizarCarrinho();
 fecharProduto();
 
 abrirCarrinho();
+
+}
+  window.salvarProdutoCarrinho = function(id){
+
+const produto =
+produtos.find(p => p.id === id);
+
+if(!produto) return;
+
+// SE ESTIVER EDITANDO
+if(window.itemEditando != null){
+
+window.salvarProdutoCarrinho = function(id){
+
+const produto =
+produtos.find(p => p.id === id);
+
+if(!produto) return;
+
+// remove item antigo se estiver editando
+if(window.itemEditando !== null){
+
+carrinho.splice(
+window.itemEditando,
+1
+);
+
+window.itemEditando = null;
+
+}
+
+let adicionou = false;
+
+for(let tamanho in window.qtdProdutoSelecionada){
+
+const qtd =
+window.qtdProdutoSelecionada[tamanho];
+
+if(qtd <= 0) continue;
+
+const imagem =
+produto.imagens?.[0]
+|| produto.img
+|| '';
+
+const existente =
+carrinho.find(i =>
+i.id === produto.id &&
+i.tamanho === tamanho
+);
+
+if(existente){
+
+existente.quantidade += qtd;
+
+}else{
+
+carrinho.push({
+id:produto.id,
+nome:produto.nome,
+tamanho,
+valor:Number(produto.valor),
+quantidade:qtd,
+imagem
+});
+
+}
+
+adicionou = true;
+}
+
+if(!adicionou){
+alert(
+'Selecione pelo menos um tamanho'
+);
+return;
+}
+
+window.qtdProdutoSelecionada = {};
+
+atualizarCarrinho();
+
+fecharProduto();
+
+abrirCarrinho();
+
+}
+  
+  window.editarItemCarrinho =
+function(index){
+
+const item =
+carrinho[index];
+
+if(!item) return;
+
+window.itemEditando = index;
+
+// abre modal
+abrirProduto(item.id);
+
+// espera renderizar
+setTimeout(()=>{
+
+window.qtdProdutoSelecionada = {};
+
+// marca tamanho atual
+window.qtdProdutoSelecionada[
+item.tamanho
+] = item.quantidade;
+
+// atualiza visual
+const el =
+document.getElementById(
+`qtd-${item.tamanho}`
+);
+
+if(el){
+el.innerText =
+item.quantidade;
+}
+
+},100);
 
 }
   
