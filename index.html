@@ -1468,7 +1468,6 @@ produtos.find(p => p.id === id);
 
 if(!produto) return;
 
-// remove item antigo se estiver editando
 if(window.itemEditando !== null){
 
 carrinho.splice(
@@ -1520,11 +1519,7 @@ adicionou = true;
 }
 
 if(!adicionou){
-
-alert(
-'Selecione pelo menos um tamanho'
-);
-
+alert('Selecione pelo menos um tamanho');
 return;
 }
 
@@ -1537,8 +1532,8 @@ fecharProduto();
 abrirCarrinho();
 
 };
-  
-  window.editarItemCarrinho = function(index){
+
+window.editarItemCarrinho = function(index){
 
 const item = carrinho[index];
 
@@ -1546,20 +1541,16 @@ if(!item) return;
 
 window.itemEditando = index;
 
-// abre modal
 abrirProduto(item.id);
 
-// espera renderizar
 setTimeout(()=>{
 
 window.qtdProdutoSelecionada = {};
 
-// marca tamanho atual
 window.qtdProdutoSelecionada[
 item.tamanho
 ] = item.quantidade;
 
-// atualiza visual
 const el =
 document.getElementById(
 `qtd-${item.tamanho}`
