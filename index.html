@@ -1664,8 +1664,22 @@ window.itemEditando,
 1
 );
 
-window.itemEditando = null;
+window.salvarProdutoCarrinho = function(id){
 
+const produto =
+produtos.find(p => p.id === id);
+
+if(!produto) return;
+
+// remove item antigo se estiver editando
+if(window.itemEditando !== null){
+
+carrinho.splice(
+window.itemEditando,
+1
+);
+
+window.itemEditando = null;
 }
 
 let adicionou = false;
