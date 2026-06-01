@@ -1095,10 +1095,12 @@ window.abrirProduto = function(id){
 window.qtdProdutoSelecionada = {};
 
 const produto =
-  console.log("DESCRIÇÃO:", produto.descricao);
+produtos.find(p => p.id === id);
 
 if(!produto) return;
 
+console.log("DESCRIÇÃO:", produto.descricao);
+  
 const imagens =
 produto.imagens?.length
 ? produto.imagens
@@ -1436,9 +1438,6 @@ window.salvarProdutoCarrinho = function(id){
 
 const produto =
 produtos.find(p => p.id === id);
-
-console.log('PRODUTO:', produto);
-console.log('DESCRICAO:', produto?.descricao);
 
 if(!produto) return;
 
