@@ -1437,6 +1437,9 @@ window.salvarProdutoCarrinho = function(id){
 const produto =
 produtos.find(p => p.id === id);
 
+console.log('PRODUTO:', produto);
+console.log('DESCRICAO:', produto?.descricao);
+
 if(!produto) return;
 
 if(window.itemEditando !== null){
