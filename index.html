@@ -392,6 +392,15 @@ Seleção BR
 </button>
 
 </div>
+
+  <div id="loading"
+style="
+text-align:center;
+padding:40px;
+color:#999;
+">
+Carregando produtos...
+</div>
   
 <div class="grid" id="produtos"></div>
 
@@ -425,22 +434,58 @@ let produtos = [];
 let filtroAtual = 'Todos';
 let carrinho = [];
 
+const CACHE_KEY = 'catalogo_castelhano';
+
 async function carregar(){
 
+// CARREGA CACHE PRIMEIRO
+const cache =
+localStorage.getItem(CACHE_KEY);
+
+if(cache){
+
+try{
+
+produtos = JSON.parse(cache);
+
+render();
+
+}catch(e){
+console.log(e);
+}
+
+}
+
+// FIREBASE EM SEGUNDO PLANO
 const snap = await getDocs(
 collection(db,'produtos')
 );
 
 produtos = [];
 
-snap.forEach(doc => {
+snap.forEach(doc=>{
+
 produtos.push({
 id:doc.id,
 ...doc.data()
 });
+
 });
-  
-  render();
+
+// ATUALIZA CACHE
+localStorage.setItem(
+CACHE_KEY,
+JSON.stringify(produtos)
+);
+
+render();
+
+const loading =
+document.getElementById('loading');
+
+if(loading){
+loading.style.display = 'none';
+}
 
 }
   
@@ -532,8 +577,11 @@ class="foto-box"
 onclick="abrirProduto('${produto.id}')">
 
 <img
+loading="lazy"
+decoding="async"
+fetchpriority="low"
 id="foto-${produto.id}"
-src="${imagens[0]}"
+src="${capa}"
 class="produto-img">
 
 </div>
@@ -1248,7 +1296,7 @@ overflow:hidden;
 
 <img
 id="fotoProdutoModal"
-src="${imagens[0]}"
+src="${capa}"
 style="
 width:100%;
 height:100%;
