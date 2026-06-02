@@ -1619,9 +1619,7 @@ const item = carrinho[index];
 if(!item) return;
 
 const produto =
-produtos.find(
-p => p.id === item.id
-);
+produtos.find(p => p.id === item.id);
 
 if(!produto) return;
 
@@ -1634,34 +1632,28 @@ const estoqueDisponivel =
 (dadosTamanho.total || 0) -
 (dadosTamanho.vendido || 0);
 
-// ADICIONAR
 if(valor > 0){
 
-if(item.quantidade >= estoqueDisponivel){
+  if(item.quantidade >= estoqueDisponivel){
+    alert('Estoque insuficiente');
+    return;
+  }
 
-alert('Estoque insuficiente');
+  item.quantidade++;
 
-return;
-}
+}else{
 
-item.quantidade++;
+  item.quantidade--;
 
-}
-
-// REMOVER
-else{
-
-item.quantidade--;
-
-if(item.quantidade <= 0){
-
-carrinho.splice(index,1);
-
-}
+  if(item.quantidade <= 0){
+    carrinho.splice(index,1);
+  }
 
 }
 
 atualizarCarrinho();
+
+};
 
      window.abrirInstagram = function(){
 
