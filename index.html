@@ -1440,6 +1440,25 @@ letter-spacing:.5px;
 ADICIONAR AO CARRINHO
 </button>
 
+<button
+onclick="abrirInstagram()"
+style="
+width:100%;
+height:52px;
+margin-top:10px;
+border:none;
+border-radius:14px;
+background:#E1306C;
+color:white;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+">
+📸 CONHEÇA NOSSA LOJA
+<br>
+<small>@castelhano_sports</small>
+</button>
+
 </div>
 
 </div>
@@ -1628,6 +1647,15 @@ return;
 item.quantidade++;
 
 }
+
+  window.abrirInstagram = function(){
+
+window.open(
+'https://instagram.com/castelhano_sports',
+'_blank'
+);
+
+};
 
 // REMOVER
 else{
