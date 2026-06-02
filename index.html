@@ -413,6 +413,7 @@ import {
 getFirestore,
 collection,
 getDocs,
+getDoc,
 addDoc,
 doc,
 updateDoc
@@ -438,6 +439,63 @@ let carrinho = [];
 const CACHE_KEY = 'catalogo_castelhano';
 
 async function carregar(){
+
+async function carregar(){
+
+const configSnap =
+await getDoc(
+doc(db,'config','site')
+);
+
+if(
+configSnap.exists() &&
+configSnap.data().manutencao === true
+){
+
+document.body.innerHTML = `
+
+<div style="
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0f0f0f;
+color:white;
+padding:30px;
+text-align:center;
+font-family:Arial;
+">
+
+<div>
+
+<h1 style="
+color:#ea580c;
+margin-bottom:20px;
+">
+🚧 Catálogo em Atualização
+</h1>
+
+<p style="
+font-size:18px;
+line-height:1.7;
+">
+Estamos atualizando e organizando nosso catálogo.<br><br>
+
+Alguns produtos estão sendo adicionados e revisados.<br><br>
+
+Em breve tudo estará disponível novamente.<br><br>
+
+Agradecemos pela compreensão.
+</p>
+
+</div>
+
+</div>
+
+`;
+
+return;
+}
 
 // CARREGA CACHE PRIMEIRO
 const cache =
