@@ -413,6 +413,7 @@ import {
 getFirestore,
 collection,
 getDocs,
+addDoc,
 doc,
 updateDoc
 }
@@ -539,7 +540,8 @@ let d = produto.tamanhos[t];
 
 let restante =
 (d.total || 0) -
-(d.vendido || 0);
+(d.vendido || 0) -
+(d.reservado || 0);
 
 estoqueTexto += `
 <div class="estoque-item">
@@ -865,7 +867,8 @@ produto.tamanhos[item.tamanho];
 
 const estoqueDisponivel =
 (dadosTamanho.total || 0) -
-(dadosTamanho.vendido || 0);
+(dadosTamanho.vendido || 0) -
+(dadosTamanho.reservado || 0);
 
 if(valor > 0){
 
@@ -917,8 +920,9 @@ produto.tamanhos[novoTamanho];
 
 const estoqueDisponivel =
 (dados.total || 0) -
-(dados.vendido || 0);
-
+(dados.vendido || 0) -
+(dados.reservado || 0);
+  
 if(item.quantidade > estoqueDisponivel){
 
 alert(
@@ -980,18 +984,18 @@ Tamanho ${item.tamanho}`
 return;
 }
 
-// baixa quantidade vendida
-tamanho.vendido +=
-item.quantidade;
+// reserva estoque
+tamanho.reservado =
+(tamanho.reservado || 0)
++ item.quantidade;
 
 await updateDoc(
 doc(db,'produtos',item.id),
 {
-tamanhos:
-produto.tamanhos
+tamanhos: produto.tamanhos
 }
 );
-
+  
 }
 
 // MONTA MENSAGEM WHATSAPP
@@ -1019,6 +1023,16 @@ mensagem +=
 mensagem +=
 `💵 *TOTAL: R$ ${total.toFixed(2)}*`;
 
+  await addDoc(
+collection(db,'pedidos'),
+{
+status:'reservado',
+data: Date.now(),
+total,
+itens: carrinho
+}
+);
+  
 // limpa carrinho
 carrinho = [];
 atualizarCarrinho();
@@ -1179,7 +1193,8 @@ if(!d) return;
 
 const restante =
 (d.total || 0) -
-(d.vendido || 0);
+(d.vendido || 0) -
+(d.reservado || 0);
 
 if(restante <= 0) return;
 
@@ -1630,7 +1645,8 @@ if(!dadosTamanho) return;
 
 const estoqueDisponivel =
 (dadosTamanho.total || 0) -
-(dadosTamanho.vendido || 0);
+(dadosTamanho.vendido || 0) -
+(dadosTamanho.reservado || 0);
 
 if(valor > 0){
 
