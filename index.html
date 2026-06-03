@@ -1230,18 +1230,19 @@ mensagem +=
 
  const agora = Date.now();
 
+const agora = Date.now();
+
 await addDoc(
 collection(db,'pedidos'),
 {
-status:'reserv
-  
-// limpa carrinho
-carrinho = [];
-
-localStorage.removeItem(
-CARRINHO_KEY
+status:'reservado',
+data: agora,
+expiraEm: agora + (15 * 60 * 1000),
+total,
+itens: carrinho
+}
 );
-
+  
 atualizarCarrinho();
 
 // recarrega produtos
