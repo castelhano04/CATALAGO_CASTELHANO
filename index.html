@@ -1086,18 +1086,49 @@ atualizarCarrinho();
   
 window.finalizarPedido = async function(){
 
-  const btnFinalizar =
+const btnFinalizar =
 document.getElementById('btnFinalizar');
 
 if(btnFinalizar.disabled) return;
-
-btnFinalizar.disabled = true;
-btnFinalizar.innerText = 'FINALIZANDO...';
 
 if(carrinho.length === 0){
 alert('Carrinho vazio');
 return;
 }
+
+// MONTA MENSAGEM WHATSAPP PRIMEIRO
+let mensagem =
+'🛒 *NOVO PEDIDO - CASTELHANO SPORTS*%0A%0A';
+
+let total = 0;
+
+carrinho.forEach((item,index)=>{
+
+const subtotal =
+item.valor * item.quantidade;
+
+total += subtotal;
+
+mensagem +=
+`*${index+1}. ${item.nome}*%0A` +
+`📏 Tamanho: ${item.tamanho}%0A` +
+`🔢 Quantidade: ${item.quantidade}%0A` +
+`💰 Valor: R$ ${subtotal.toFixed(2)}%0A%0A`;
+
+});
+
+mensagem +=
+`💵 *TOTAL: R$ ${total.toFixed(2)}*`;
+
+// ABRE WHATSAPP IMEDIATAMENTE
+window.open(
+`https://wa.me/5547991938901?text=${mensagem}`,
+'_blank'
+);
+
+// AGORA TRAVA O BOTÃO
+btnFinalizar.disabled = true;
+btnFinalizar.innerText = 'FINALIZANDO...';
 
 try{
 
