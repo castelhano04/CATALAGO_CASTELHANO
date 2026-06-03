@@ -1086,6 +1086,14 @@ atualizarCarrinho();
   
 window.finalizarPedido = async function(){
 
+  const btnFinalizar =
+document.getElementById('btnFinalizar');
+
+if(btnFinalizar.disabled) return;
+
+btnFinalizar.disabled = true;
+btnFinalizar.innerText = 'FINALIZANDO...';
+
 if(carrinho.length === 0){
 alert('Carrinho vazio');
 return;
@@ -1188,6 +1196,11 @@ alert('Pedido enviado e estoque atualizado!');
 }catch(e){
 
 console.error(e);
+
+if(btnFinalizar){
+  btnFinalizar.disabled = false;
+  btnFinalizar.innerText = 'FINALIZAR PEDIDO';
+}
 
 alert(
 'Erro ao finalizar pedido: ' +
@@ -1853,13 +1866,14 @@ Carrinho vazio
 </div>
 
 <button
+id="btnFinalizar"
 class="finalizar"
 onclick="finalizarPedido()">
 
 FINALIZAR PEDIDO
 
 </button>
-
+  
 </div>
 
 </div>
