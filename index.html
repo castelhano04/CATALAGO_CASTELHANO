@@ -516,6 +516,19 @@ let produtos = [];
 let filtroAtual = 'Todos';
 let carrinho = [];
 
+  const CARRINHO_KEY = 'carrinho_castelhano';
+
+// recupera carrinho salvo
+try{
+  const salvo = localStorage.getItem(CARRINHO_KEY);
+
+  if(salvo){
+    carrinho = JSON.parse(salvo);
+  }
+}catch(e){
+  console.log(e);
+}
+  
   window.itemEditando = null;
 
 const CACHE_KEY = 'catalogo_castelhano';
@@ -649,6 +662,8 @@ render();
 }
 
 carregar();
+
+  atualizarCarrinho();
   
 function render(){
 
@@ -761,7 +776,16 @@ ESGOTADO
 });
 
 }
- 
+
+  function salvarCarrinho(){
+
+  localStorage.setItem(
+    CARRINHO_KEY,
+    JSON.stringify(carrinho)
+  );
+
+}
+  
 function atualizarCarrinho(){
 
 const div =
@@ -976,6 +1000,8 @@ R$ ${total.toFixed(2)}
 
 div.innerHTML = html;
 contador.innerText = totalItens;
+
+salvarCarrinho();
 
 }
 /* REMOVER ITEM */
@@ -1214,6 +1240,11 @@ itens: carrinho
   
 // limpa carrinho
 carrinho = [];
+
+localStorage.removeItem(
+CARRINHO_KEY
+);
+
 atualizarCarrinho();
 
 // recarrega produtos
