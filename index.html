@@ -676,10 +676,12 @@ for(let t in produto.tamanhos){
 
 let d = produto.tamanhos[t];
 
-let restante =
+let restante = Math.max(
+0,
 (d.total || 0) -
 (d.vendido || 0) -
-(d.reservado || 0);
+(d.reservado || 0)
+);
 
 estoqueTexto += `
 <div class="estoque-item">
