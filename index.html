@@ -1228,15 +1228,12 @@ mensagem +=
 mensagem +=
 `💵 *TOTAL: R$ ${total.toFixed(2)}*`;
 
-  await addDoc(
+ const agora = Date.now();
+
+await addDoc(
 collection(db,'pedidos'),
 {
-status:'reservado',
-data: Date.now(),
-total,
-itens: carrinho
-}
-);
+status:'reserv
   
 // limpa carrinho
 carrinho = [];
