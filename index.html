@@ -1176,8 +1176,9 @@ if(!tamanho) continue;
 // confere estoque real
 const disponivel =
 tamanho.total -
-tamanho.vendido;
-
+(tamanho.vendido || 0) -
+(tamanho.reservado || 0);
+  
 if(item.quantidade > disponivel){
 
 alert(
@@ -1241,17 +1242,13 @@ itens: carrinho
 }
 );
   
+carrinho = [];
+
+salvarCarrinho();
+
 atualizarCarrinho();
 
-// recarrega produtos
-carregar();
-
-window.open(
-`https://wa.me/5547991938901?text=${mensagem}`,
-'_blank'
-);
-
-alert('Pedido enviado e estoque atualizado!');
+await carregar();
 
 }catch(e){
 
