@@ -416,10 +416,11 @@ getDocs,
 getDoc,
 addDoc,
 doc,
-updateDoc
+updateDoc,
+onSnapshot
 }
 from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-
+  
 const firebaseConfig = {
 apiKey:"AIzaSyD4TfY6Iwrju_aaG1vpN-q1Z9LyiDBeQvQ",
 authDomain:"estoque-app-13f1d.firebaseapp.com",
@@ -432,6 +433,83 @@ appId:"1:193095930583:web:88587ee9f4e10076619692"
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+ onSnapshot(
+doc(db,'config','site'),
+(snapshot)=>{
+
+if(!snapshot.exists()) return;
+
+const config = snapshot.data();
+
+// MANUTENÇÃO
+if(config.manutencao === true){
+
+document.body.innerHTML = `
+<div style="
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0f0f0f;
+color:white;
+padding:30px;
+text-align:center;
+font-family:Arial;
+">
+<div>
+<h1 style="color:#ea580c;">
+🚧 Catálogo em Atualização
+</h1>
+
+<p>
+Estamos atualizando e organizando nosso catálogo.<br><br>
+Agradecemos pela compreensão.
+</p>
+</div>
+</div>
+`;
+
+return;
+}
+
+const avisoExistente =
+document.getElementById('aviso-site');
+
+if(config.mostrarAviso === true){
+
+if(!avisoExistente){
+
+document.body.insertAdjacentHTML(
+'afterbegin',
+`
+<div id="aviso-site"
+style="
+background:#facc15;
+color:#000;
+padding:10px;
+text-align:center;
+font-weight:bold;
+">
+${config.aviso || ''}
+</div>
+`
+);
+
+}else{
+
+avisoExistente.innerHTML =
+config.aviso || '';
+
+}
+
+}else{
+
+if(avisoExistente){
+avisoExistente.remove();
+}
+
+}
+  
 let produtos = [];
 let filtroAtual = 'Todos';
 let carrinho = [];
