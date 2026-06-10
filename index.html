@@ -1185,19 +1185,7 @@ Tamanho ${item.tamanho}`
 
 return;
 }
-
-// reserva estoque
-tamanho.reservado =
-(tamanho.reservado || 0)
-+ item.quantidade;
-
-await updateDoc(
-doc(db,'produtos',item.id),
-{
-tamanhos: produto.tamanhos
-}
-);
-  
+ 
 }
 
 // MONTA MENSAGEM WHATSAPP
@@ -1226,17 +1214,6 @@ mensagem +=
 `💵 *TOTAL: R$ ${total.toFixed(2)}*`;
 
 const agora = Date.now();
-
-await addDoc(
-collection(db,'pedidos'),
-{
-status:'reservado',
-data: agora,
-expiraEm: agora + (15 * 60 * 1000),
-total,
-itens: carrinho
-}
-);
   
 carrinho = [];
 
