@@ -1368,10 +1368,7 @@ window.qtdProdutoSelecionada = {};
 const produto =
 produtos.find(p => p.id === id);
 
-  window.videoAtual =
-produto.video || '';
-
-if(!produto) return;
+ if(!produto) return;
 
 console.log("DESCRIÇÃO:", produto.descricao);
   
